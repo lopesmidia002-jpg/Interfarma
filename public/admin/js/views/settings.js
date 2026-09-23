@@ -142,7 +142,8 @@ export async function renderSettings(container) {
         const uploadRes = await adminApi.uploadFile(file);
         document.getElementById('set-logo-url').value = uploadRes.url;
         document.getElementById('preview-logo').src = uploadRes.url;
-        alert('Logotipo enviado com sucesso!');
+        await adminApi.updateSettings({ logo_url: uploadRes.url, logo_footer_url: uploadRes.url });
+        alert('Logotipo enviado e salvo com sucesso no site!');
       } catch (err) {
         alert('Erro ao enviar logo: ' + err.message);
       }
@@ -156,7 +157,8 @@ export async function renderSettings(container) {
         const uploadRes = await adminApi.uploadFile(file);
         document.getElementById('set-favicon-url').value = uploadRes.url;
         document.getElementById('preview-favicon').src = uploadRes.url;
-        alert('Favicon enviado com sucesso!');
+        await adminApi.updateSettings({ favicon_url: uploadRes.url });
+        alert('Favicon enviado e salvo com sucesso no site!');
       } catch (err) {
         alert('Erro ao enviar favicon: ' + err.message);
       }

@@ -438,20 +438,30 @@ export async function renderPageEditor(container, pageSlug = 'home') {
         if (imgPreview) imgPreview.src = val || '/asserts/hero-header-bg.png';
       });
 
+      // Upload de Imagem e Auto-Save da Foto
       fileInput?.addEventListener('change', async (e) => {
         const file = e.target.files[0];
         if (!file) return;
+        const sectionKey = card.getAttribute('data-key');
+        const currentSec = sections.find(s => s.section_key === sectionKey);
+
         if (uploadBtn) {
           uploadBtn.disabled = true;
-          uploadBtn.textContent = '⏳ Enviando...';
+          uploadBtn.textContent = '⏳ Enviando foto...';
         }
         try {
           const res = await adminApi.uploadFile(file);
           if (urlInput) urlInput.value = res.url;
           if (imgPreview) imgPreview.src = res.url;
+          if (currentSec) currentSec.image_url = res.url;
+
+          // Auto-save no banco de dados e sincronização imediata
+          await adminApi.updatePageSection(pageSlug, sectionKey, { image_url: res.url });
+
           if (statusText) {
+            statusText.textContent = '✅ Foto salva no banco e aplicada no site com sucesso!';
             statusText.style.display = 'inline';
-            setTimeout(() => { statusText.style.display = 'none'; }, 4000);
+            setTimeout(() => { statusText.style.display = 'none'; }, 5000);
           }
         } catch (err) {
           alert('Erro no upload da imagem: ' + err.message);
@@ -463,7 +473,7 @@ export async function renderPageEditor(container, pageSlug = 'home') {
         }
       });
 
-      // Salvar Seção
+      // Salvar Seção Completa
       const saveBtn = card.querySelector('.btn-save-section');
       saveBtn?.addEventListener('click', async () => {
         const sectionKey = card.getAttribute('data-key');
@@ -586,6 +596,7 @@ export async function renderPageEditor(container, pageSlug = 'home') {
           }
 
           const badgeInput = card.querySelector('.sec-badge');
+          const finalImgUrl = urlInput ? urlInput.value.trim() : (currentSec ? currentSec.image_url : '');
           const payload = {
             title: card.querySelector('.sec-title')?.value,
             badge_text: badgeInput ? badgeInput.value : '',
@@ -593,11 +604,14 @@ export async function renderPageEditor(container, pageSlug = 'home') {
             content: content,
             button_text: currentSec ? currentSec.button_text : '',
             button_link: currentSec ? currentSec.button_link : '',
-            image_url: urlInput ? urlInput.value : (currentSec ? currentSec.image_url : ''),
+            image_url: finalImgUrl,
             extra_data: extraData
           };
 
-          await adminApi.updatePageSection(pageSlug, sectionKey, payload);
+          const updateRes = await adminApi.updatePageSection(pageSlug, sectionKey, payload);
+          if (currentSec && updateRes.section) {
+            Object.assign(currentSec, updateRes.section);
+          }
           alert(`Seção "${sectionKey}" atualizada com sucesso no site!`);
         } catch (err) {
           alert('Erro ao salvar seção: ' + err.message);

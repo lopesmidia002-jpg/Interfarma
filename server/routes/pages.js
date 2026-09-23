@@ -88,30 +88,43 @@ router.put('/:pageSlug/sections/:sectionKey', authenticateToken, (req, res) => {
   } = req.body;
 
   try {
-    const extraDataStr = typeof extra_data === 'object' ? JSON.stringify(extra_data) : extra_data;
+    const extraDataStr = (extra_data !== undefined && extra_data !== null)
+      ? (typeof extra_data === 'object' ? JSON.stringify(extra_data) : extra_data)
+      : null;
 
     // Verificar se existe
-    const existing = db.prepare('SELECT id FROM page_sections WHERE page_slug = ? AND section_key = ?')
+    const existing = db.prepare('SELECT * FROM page_sections WHERE page_slug = ? AND section_key = ?')
       .get(pageSlug, sectionKey);
 
     if (existing) {
+      const newTitle = title !== undefined ? title : existing.title;
+      const newSubtitle = subtitle !== undefined ? subtitle : existing.subtitle;
+      const newContent = content !== undefined ? content : existing.content;
+      const newButtonText = button_text !== undefined ? button_text : existing.button_text;
+      const newButtonLink = button_link !== undefined ? button_link : existing.button_link;
+      const newImageUrl = (image_url !== undefined && image_url !== null) ? image_url : existing.image_url;
+      const newBadgeText = badge_text !== undefined ? badge_text : existing.badge_text;
+      const newExtraData = extraDataStr !== null ? extraDataStr : existing.extra_data;
+      const newSortOrder = sort_order !== undefined ? sort_order : existing.sort_order;
+      const newIsActive = is_active !== undefined ? (is_active ? 1 : 0) : existing.is_active;
+
       db.prepare(`
         UPDATE page_sections
-        SET title = COALESCE(?, title),
-            subtitle = COALESCE(?, subtitle),
-            content = COALESCE(?, content),
-            button_text = COALESCE(?, button_text),
-            button_link = COALESCE(?, button_link),
-            image_url = COALESCE(?, image_url),
-            badge_text = COALESCE(?, badge_text),
-            extra_data = COALESCE(?, extra_data),
-            sort_order = COALESCE(?, sort_order),
-            is_active = COALESCE(?, is_active),
+        SET title = ?,
+            subtitle = ?,
+            content = ?,
+            button_text = ?,
+            button_link = ?,
+            image_url = ?,
+            badge_text = ?,
+            extra_data = ?,
+            sort_order = ?,
+            is_active = ?,
             updated_at = CURRENT_TIMESTAMP
         WHERE page_slug = ? AND section_key = ?
       `).run(
-        title, subtitle, content, button_text, button_link,
-        image_url, badge_text, extraDataStr, sort_order, is_active,
+        newTitle, newSubtitle, newContent, newButtonText, newButtonLink,
+        newImageUrl, newBadgeText, newExtraData, newSortOrder, newIsActive,
         pageSlug, sectionKey
       );
     } else {
@@ -121,9 +134,12 @@ router.put('/:pageSlug/sections/:sectionKey', authenticateToken, (req, res) => {
           button_text, button_link, image_url, badge_text, extra_data, sort_order, is_active
         ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
       `).run(
-        pageSlug, sectionKey, title, subtitle, content,
-        button_text, button_link, image_url, badge_text, extraDataStr,
-        sort_order || 0, is_active !== undefined ? is_active : 1
+        pageSlug, sectionKey,
+        title || '', subtitle || '', content || '',
+        button_text || '', button_link || '',
+        image_url || '', badge_text || '',
+        extraDataStr || null,
+        sort_order || 0, is_active !== undefined ? (is_active ? 1 : 0) : 1
       );
     }
 
@@ -137,7 +153,7 @@ router.put('/:pageSlug/sections/:sectionKey', authenticateToken, (req, res) => {
     res.json({ message: 'Seção atualizada com sucesso.', section: updated });
   } catch (error) {
     console.error('Erro ao atualizar seção:', error);
-    res.status(500).json({ error: 'Erro ao salvar alterações da seção.' });
+    res.status(500).json({ error: 'Erro ao salvar alterações da seção: ' + error.message });
   }
 });
 
