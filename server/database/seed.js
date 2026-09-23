@@ -123,12 +123,12 @@ export function runSeed() {
       sort_order: 2,
       extra_data: JSON.stringify({
         steps: [
-          { step: '01', title: 'Prescrição Médica', desc: 'Uma prescrição é uma rotina de cuidados com a saúde, implementados por um médico ou outro profissional de saúde qualificado, voltados para um paciente em específico.' },
+          { step: '01', title: 'Prescrição Médica', desc: 'Uma prescrição é uma rotina de cuidados com a saúde, implementadas por um médico ou outro profissional de saúde qualificado, voltadas para um paciente em específico.' },
           { step: '02', title: 'Fornecedores', desc: 'Verificamos a disponibilidade nos fornecedores exclusivos e qualificados espalhados em vários países que forneça o melhor custo benefício e menor prazo de embarque.' },
-          { step: '03', title: 'Proposta Comercial', desc: 'Apresentamos ao cliente todas as informações necessárias sobre o medicamento, como: fabricante, dosagem, quantidade, prazo e custo total.' },
-          { step: '04', title: 'Pagamento', desc: 'O pagamento é efetuado através de transferência bancária ou boleto, garantindo total segurança na transação financeira internacional.' },
-          { step: '05', title: 'Envio & Logística', desc: 'O medicamento é despachado com controle rigoroso de temperatura e rastreamento em tempo real por nossa equipe técnica.' },
-          { step: '06', title: 'Entrega no Destino', desc: 'O medicamento chega com total segurança no endereço indicado ou na clínica/hospital responsável pelo tratamento.' }
+          { step: '03', title: 'Aprovação', desc: 'Aprovação do orçamento e documentos do paciente disponíveis. Enviados através dos correios ou via emails. Com total discrição e confiabilidade com o paciente.' },
+          { step: '04', title: 'Autorização', desc: 'Autorizamos o fornecedor a embarcar o produto, certificamos com a origem e controle de temperatura e documentos para monitoramento da carga.' },
+          { step: '05', title: 'ANVISA – RF', desc: 'Produto no Brasil necessita ser fiscalizado pelos setores responsáveis ANVISA – RF. Inspeção realizada, os mesmos fornecerão os documentos comprobatórios da anuência em cada setor.' },
+          { step: '06', title: 'Garantia de Entrega', desc: 'Garantimos a entrega do medicamento para o paciente, hospitais e clínicas onde ele estiver. As entregas são realizadas em embalagens certificadas.' }
         ]
       })
     },
