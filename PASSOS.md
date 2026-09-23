@@ -75,12 +75,11 @@ Este arquivo rastreia os passos de desenvolvimento por ordem de prioridade.
   - Atualização da foto da seção "Tecnologia e Investimento" na página Diferenciais pela imagem do supervisor com capacete e tablet.
   - Substituição das fotos de fundo médicas/circulares dos banners pela foto panorâmica oficial da equipe.
   - Atualização da foto da seção "Possuímos todas as licenças exigidas pelos órgãos reguladores" na página Diferenciais pela imagem oficial do supervisor com capacete de segurança branco e tablet (`supervisor-licencas.jpg`, `Rectangle Copy 4.jpg`).
-  - Validação da execução em Docker 100% online e com status healthy.
+  - Implementação do Editor de Páginas completo e auditável para todas as 8 páginas do site com carregamento direto de fotos (Upload), preview instantâneo e campos de texto dinâmicos integrados à API.
+  - Padronização visual e tipográfica no modo mobile para todos os inputs, textareas, rótulos e botões do Painel Administrativo.
+  - Atualização da imagem da seção "Um pouco sobre nós." na Home pela foto oficial de referência da equipe com detalhe orgânico e moldura suave.
+  - Implementação do fluxo de 6 etapas (Prescrição Médica, Fornecedores, Aprovação, Autorização, ANVISA - RF e Garantia de Entrega) com setas sólidas azuis em bloco (#0088CC) nas páginas Como Funciona e Home.
   - Atualização de `DOCUMENTACAO.md`, `CONTEXTO.md` e `PASSOS.md`.
-
-
-
-
 
 
 
