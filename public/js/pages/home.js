@@ -146,24 +146,9 @@ export async function renderHomePage() {
         <div class="container" style="max-width: 1140px;">
           <div class="about-us-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 4.5rem; align-items: center;">
             
-            <!-- FOTO DA EQUIPE PROPORCIONAL COM DETALHE AMARELO E MOLDURA AZUL SUAVE -->
-            <div class="about-team-container">
-              
-              <!-- Moldura azul suave ao fundo deslocada -->
-              <div style="position: absolute; width: 88%; height: 94%; top: 14px; left: -10px; background: #EBF4FA; border-radius: 20px; z-index: 1;"></div>
-              
-              <!-- Detalhe orgânico amarelo com traços doodle -->
-              <div style="position: absolute; top: -12px; left: -10px; width: 60px; height: 60px; background: #FCD34D; border-radius: 40% 60% 70% 30% / 40% 50% 60% 70%; z-index: 3; box-shadow: 0 4px 12px rgba(252, 211, 77, 0.35); display: flex; align-items: center; justify-content: center;">
-                <svg width="34" height="34" viewBox="0 0 100 100" fill="none" stroke="#FFFFFF" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.85">
-                  <path d="M20 45 C30 20, 60 25, 75 40 C90 55, 65 85, 45 75 C25 65, 30 40, 55 35 C70 30, 80 50, 70 65"/>
-                </svg>
-              </div>
-
-              <!-- Foto da equipe com altura proporcional ao conteúdo e 100% visível no mobile -->
-              <div style="position: relative; z-index: 2; width: 100%; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.06);">
-                <img class="about-team-photo" src="${sec.about_summary?.image_url || '/asserts/equipe-reuniao.jpg'}" alt="Equipe InterFarma" onerror="this.src='/asserts/equipe-reuniao.jpg';">
-              </div>
-
+            <!-- FOTO DA EQUIPE CONFORME A IMAGEM DE REFERÊNCIA -->
+            <div class="about-team-container" style="position: relative; max-width: 500px; margin: 0 auto;">
+              <img class="about-team-photo" src="${sec.about_summary?.image_url || '/asserts/equipe-reuniao.jpg'}" alt="Equipe InterFarma" style="width: 100%; height: auto; max-height: 540px; object-fit: contain; display: block; border-radius: 20px;" onerror="this.src='/asserts/equipe-reuniao.jpg';">
             </div>
 
             <!-- TEXTO E 4 DESTAQUES CONFORME A REFERÊNCIA -->
