@@ -14,6 +14,7 @@ export async function renderComoFuncionaPage() {
 
   const heroTitle = sec.hero?.title || 'Como funciona';
   const heroSubtitle = sec.hero?.subtitle || 'Confira todo o processo da InterFarma';
+  const heroBg = sec.hero?.image_url ? `background-image: url('${sec.hero.image_url}');` : '';
   const introText = sec.hero?.content || 'A InterFarma trabalha para auxiliar todos os brasileiros na<br>importação de medicamentos, sem tributação alfandegária*.';
 
   const defaultSteps = [

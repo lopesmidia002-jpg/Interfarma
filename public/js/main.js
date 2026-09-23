@@ -59,36 +59,49 @@ function getRouteInfo(pathname) {
 }
 
 async function navigateTo(path, pushState = true) {
-  if (pushState) {
-    window.history.pushState({}, '', path);
+  try {
+    const targetPath = path || window.location.pathname;
+
+    if (pushState && window.location.pathname !== targetPath) {
+      window.history.pushState({}, '', targetPath);
+    }
+
+    // Garantir que classes e travas do menu mobile sejam removidas
+    document.body.classList.remove('mobile-menu-active');
+    document.body.style.overflow = '';
+
+    const { handler, routeKey, param } = getRouteInfo(targetPath);
+
+    // Renderizar Header e Footer com link ativo
+    renderHeader(appSettings, routeKey);
+    renderFooter(appSettings);
+
+    // Scroll para o topo
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    // Executar renderizador da página
+    if (param) {
+      await handler(param);
+    } else {
+      await handler();
+    }
+
+    // Atualizar título da aba
+    updateDocumentTitle(routeKey);
+  } catch (err) {
+    console.error('Erro ao navegar para a página:', err);
+    // Se falhar em rota específica, renderizar Home sem quebrar
+    try {
+      await renderHomePage();
+      updateDocumentTitle('home');
+    } catch (homeErr) {
+      console.error('Erro crítico no fallback da Home:', homeErr);
+    }
   }
-
-  // Garantir que classes e travas do menu mobile sejam removidas
-  document.body.classList.remove('mobile-menu-active');
-  document.body.style.overflow = '';
-
-  const { handler, routeKey, param } = getRouteInfo(window.location.pathname);
-
-  // Renderizar Header e Footer com link ativo
-  renderHeader(appSettings, routeKey);
-  renderFooter(appSettings);
-
-  // Scroll para o topo
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-
-  // Executar renderizador da página
-  if (param) {
-    await handler(param);
-  } else {
-    await handler();
-  }
-
-  // Atualizar título da aba
-  updateDocumentTitle(routeKey);
 }
 
 function updateDocumentTitle(routeKey) {
-  const siteName = appSettings?.site_name || 'Intelfarma';
+  const siteName = appSettings?.site_name || 'InterFarma';
   const titles = {
     'home': `${siteName} - Soluções Inteligentes em Saúde e Benefícios Farmacêuticos`,
     'como-funciona': `Como Funciona | ${siteName}`,
@@ -117,11 +130,15 @@ async function initApp() {
     const targetLink = e.target.closest('a');
     if (!targetLink) return;
 
+    if (targetLink.target === '_blank' || targetLink.getAttribute('target') === '_blank') {
+      return;
+    }
+
     const href = targetLink.getAttribute('href');
     if (!href) return;
 
-    // Se for link externo, admin ou âncora interna
-    if (href.startsWith('http') || href.startsWith('mailto:') || href.startsWith('tel:') || href.startsWith('/admin') || href.startsWith('#')) {
+    // Se for link externo, admin, tel, mailto ou âncora interna
+    if (href.startsWith('http') || href.startsWith('mailto:') || href.startsWith('tel:') || href.startsWith('/admin') || href.startsWith('#') || href.startsWith('javascript:')) {
       return;
     }
 
