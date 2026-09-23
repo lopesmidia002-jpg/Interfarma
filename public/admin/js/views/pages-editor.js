@@ -168,18 +168,18 @@ export async function renderPageEditor(container, pageSlug = 'home') {
                 <div class="form-grid-2">
                   <div class="form-group">
                     <label class="form-label">Título Principal</label>
-                    <textarea class="form-control sec-title" rows="2" style="resize: vertical; min-height: 48px;">${sec.title || ''}</textarea>
+                    <textarea class="form-control sec-title" rows="2" style="resize: vertical; min-height: 60px;" placeholder="Digite o título principal">${sec.title || ''}</textarea>
                   </div>
 
                   ${(sec.section_key === 'hero' && pageSlug === 'home') ? `
                     <div class="form-group">
                       <label class="form-label">Subtítulo / Descrição do Banner</label>
-                      <textarea class="form-control sec-hero-subtitle" rows="2" style="resize: vertical; min-height: 48px;" placeholder="Digite o subtítulo do banner principal">${sec.subtitle || ''}</textarea>
+                      <textarea class="form-control sec-hero-subtitle" rows="3" style="resize: vertical; min-height: 75px;" placeholder="Digite o subtítulo do banner principal">${sec.subtitle || ''}</textarea>
                     </div>
                   ` : `
                     <div class="form-group">
                       <label class="form-label">${sec.section_key === 'hero' ? 'Subtítulo do Banner' : 'Texto do Badge / Selo'}</label>
-                      <textarea class="form-control ${sec.section_key === 'hero' ? 'sec-hero-subtitle' : 'sec-badge'}" rows="1" style="resize: vertical; min-height: 48px;">${sec.section_key === 'hero' ? (sec.subtitle || '') : (sec.badge_text || '')}</textarea>
+                      <textarea class="form-control ${sec.section_key === 'hero' ? 'sec-hero-subtitle' : 'sec-badge'}" rows="2" style="resize: vertical; min-height: 60px;" placeholder="Digite o subtítulo ou badge">${sec.section_key === 'hero' ? (sec.subtitle || '') : (sec.badge_text || '')}</textarea>
                     </div>
                   `}
                 </div>
@@ -188,14 +188,14 @@ export async function renderPageEditor(container, pageSlug = 'home') {
                 ${(pageSlug === 'como-funciona' && sec.section_key === 'hero') ? `
                   <div class="form-group" style="margin-bottom: 1.25rem;">
                     <label class="form-label" style="font-weight: 700;">Texto Introdutório da Página</label>
-                    <textarea class="form-control sec-content" rows="2" style="resize: vertical; min-height: 52px;">${sec.content || 'A InterFarma trabalha para auxiliar todos os brasileiros na importação de medicamentos, sem tributação alfandegária*.'}</textarea>
+                    <textarea class="form-control sec-content" rows="3" style="resize: vertical; min-height: 75px;" placeholder="Digite o texto introdutório">${sec.content || 'A InterFarma trabalha para auxiliar todos os brasileiros na importação de medicamentos, sem tributação alfandegária*.'}</textarea>
                   </div>
                 ` : ''}
 
                 ${isAboutSection ? `
                   <div class="form-group" style="margin-bottom: 1.25rem;">
                     <label class="form-label" style="font-weight: 700;">Texto / Descrição Explicativa</label>
-                    <textarea class="form-control sec-about-subtitle" rows="2" style="resize: vertical; min-height: 52px;">${sec.subtitle || 'A InterFarma trabalha para auxiliar todos os brasileiros na importação de medicamentos, sem tributação alfandegária*.'}</textarea>
+                    <textarea class="form-control sec-about-subtitle" rows="3" style="resize: vertical; min-height: 75px;" placeholder="Digite a descrição explicativa">${sec.subtitle || 'A InterFarma trabalha para auxiliar todos os brasileiros na importação de medicamentos, sem tributação alfandegária*.'}</textarea>
                   </div>
 
                   <!-- 4 CARDS DE DESTAQUE / DIFERENCIAIS -->
@@ -218,7 +218,7 @@ export async function renderPageEditor(container, pageSlug = 'home') {
                               </div>
                               <div class="form-group" style="margin-bottom: 0;">
                                 <label class="form-label" style="font-size: 0.8rem;">Descrição do Card</label>
-                                <input type="text" class="form-control sec-about-item-text-${i}" value="${item.text || ''}" placeholder="Ex: Contamos com uma rede global...">
+                                <textarea class="form-control sec-about-item-text-${i}" rows="2" style="resize: vertical; min-height: 56px;" placeholder="Ex: Contamos com uma rede global...">${item.text || ''}</textarea>
                               </div>
                             </div>
                           </div>
@@ -249,7 +249,7 @@ export async function renderPageEditor(container, pageSlug = 'home') {
                               </div>
                               <div class="form-group" style="margin-bottom: 0;">
                                 <label class="form-label" style="font-size: 0.8rem;">Descrição da Etapa</label>
-                                <input type="text" class="form-control sec-step-desc-${i}" value="${step.desc || ''}" placeholder="Ex: Uma prescrição é uma rotina...">
+                                <textarea class="form-control sec-step-desc-${i}" rows="2" style="resize: vertical; min-height: 56px;" placeholder="Ex: Uma prescrição é uma rotina...">${step.desc || ''}</textarea>
                               </div>
                             </div>
                           </div>
@@ -280,7 +280,7 @@ export async function renderPageEditor(container, pageSlug = 'home') {
                               </div>
                               <div class="form-group" style="margin-bottom: 0;">
                                 <label class="form-label" style="font-size: 0.8rem;">Descrição da Autorização</label>
-                                <input type="text" class="form-control sec-lic-desc-${i}" value="${lic.desc || ''}" placeholder="Ex: Autorização para importação...">
+                                <textarea class="form-control sec-lic-desc-${i}" rows="2" style="resize: vertical; min-height: 56px;" placeholder="Ex: Autorização para importação...">${lic.desc || ''}</textarea>
                               </div>
                             </div>
                           </div>
@@ -311,7 +311,7 @@ export async function renderPageEditor(container, pageSlug = 'home') {
                               </div>
                               <div class="form-group" style="margin-bottom: 0;">
                                 <label class="form-label" style="font-size: 0.8rem;">Descrição do Recurso</label>
-                                <input type="text" class="form-control sec-feat-desc-${i}" value="${feat.desc || ''}" placeholder="Ex: Nossas estruturas contam com...">
+                                <textarea class="form-control sec-feat-desc-${i}" rows="2" style="resize: vertical; min-height: 56px;" placeholder="Ex: Nossas estruturas contam com...">${feat.desc || ''}</textarea>
                               </div>
                             </div>
                           </div>
@@ -342,7 +342,7 @@ export async function renderPageEditor(container, pageSlug = 'home') {
                               </div>
                               <div class="form-group" style="margin-bottom: 0;">
                                 <label class="form-label" style="font-size: 0.8rem;">Descrição</label>
-                                <input type="text" class="form-control sec-val-desc-${i}" value="${val.desc || ''}">
+                                <textarea class="form-control sec-val-desc-${i}" rows="2" style="resize: vertical; min-height: 56px;">${val.desc || ''}</textarea>
                               </div>
                             </div>
                           </div>
@@ -373,7 +373,7 @@ export async function renderPageEditor(container, pageSlug = 'home') {
                               </div>
                               <div class="form-group" style="margin-bottom: 0;">
                                 <label class="form-label" style="font-size: 0.8rem;">Descrição do Atendimento</label>
-                                <input type="text" class="form-control sec-cli-desc-${i}" value="${cli.desc || ''}" placeholder="Ex: Atendimento ágil para...">
+                                <textarea class="form-control sec-cli-desc-${i}" rows="2" style="resize: vertical; min-height: 56px;" placeholder="Ex: Atendimento ágil para...">${cli.desc || ''}</textarea>
                               </div>
                             </div>
                           </div>

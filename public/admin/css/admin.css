@@ -800,11 +800,59 @@ textarea.form-control {
     overflow-wrap: break-word !important;
   }
 
-  p, label {
-    font-size: 0.86rem !important;
+  /* ==========================================================================
+     PADRONIZAÇÃO TIPOGRÁFICA E TEXTUAL NO MODO MOBILE (TODAS AS PÁGINAS)
+     ========================================================================== */
+  h1 {
+    font-size: 1.45rem !important;
+    line-height: 1.3 !important;
+    font-weight: 800 !important;
+    color: #0F172A !important;
+    letter-spacing: -0.01em !important;
+    margin-bottom: 0.35rem !important;
+  }
+
+  h2 {
+    font-size: 1.25rem !important;
+    line-height: 1.35 !important;
+    font-weight: 800 !important;
+    color: #1E293B !important;
+    margin-bottom: 0.35rem !important;
+  }
+
+  h3 {
+    font-size: 1.12rem !important;
+    line-height: 1.4 !important;
+    font-weight: 700 !important;
+    color: #0284C7 !important;
+    margin-bottom: 0.25rem !important;
+  }
+
+  h4 {
+    font-size: 0.95rem !important;
+    line-height: 1.4 !important;
+    font-weight: 700 !important;
+    color: #1E293B !important;
+    margin-bottom: 0.25rem !important;
+  }
+
+  p {
+    font-size: 0.88rem !important;
     line-height: 1.55 !important;
+    color: #64748B !important;
     text-align: left !important;
     overflow-wrap: break-word !important;
+  }
+
+  /* RÓTULOS (LABELS) PADRONIZADOS */
+  .form-label, label {
+    font-size: 0.85rem !important;
+    font-weight: 700 !important;
+    color: #334155 !important;
+    margin-bottom: 0.45rem !important;
+    line-height: 1.4 !important;
+    display: block !important;
+    text-align: left !important;
   }
 
   /* JUSTIFICAÇÃO À ESQUERDA DE TODOS OS CARDS E ÍCONES NO MODO MOBILE */
@@ -855,7 +903,7 @@ textarea.form-control {
     flex-direction: column !important;
     align-items: flex-start !important;
     text-align: left !important;
-    gap: 1rem !important;
+    gap: 0.85rem !important;
     width: 100% !important;
   }
 
@@ -866,12 +914,33 @@ textarea.form-control {
     max-width: 100% !important;
   }
 
+  /* BOTÕES PADRONIZADOS NO MODO MOBILE */
   .btn-adm, .btn {
-    justify-content: flex-start !important;
-    text-align: left !important;
-    white-space: normal !important;
-    max-width: 100% !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    min-height: 44px !important;
+    padding: 0.7rem 1.25rem !important;
+    font-size: 0.92rem !important;
+    font-weight: 700 !important;
+    border-radius: 8px !important;
     box-sizing: border-box !important;
+    width: auto !important;
+    white-space: normal !important;
+    word-break: normal !important;
+    transition: all 0.2s ease !important;
+  }
+
+  .btn-save-section,
+  .btn-adm-primary {
+    width: 100% !important;
+    justify-content: center !important;
+    text-align: center !important;
+  }
+
+  .card-header-flex .btn-save-section {
+    margin-top: 0.5rem !important;
   }
 
   .admin-card {
@@ -882,6 +951,9 @@ textarea.form-control {
     width: 100% !important;
     max-width: 100% !important;
     box-sizing: border-box !important;
+    border-radius: 14px !important;
+    border: 1px solid #E2E8F0 !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.03) !important;
   }
 
   .table-responsive {
@@ -907,23 +979,23 @@ textarea.form-control {
     max-width: 100% !important;
     margin: 0 !important;
     max-height: 94vh !important;
-    border-radius: 12px !important;
+    border-radius: 14px !important;
     box-sizing: border-box !important;
     overflow: hidden !important;
   }
 
   .modal-header {
-    padding: 1rem !important;
+    padding: 1rem 1.15rem !important;
     box-sizing: border-box !important;
   }
 
   .modal-header h3 {
-    font-size: 1.1rem !important;
+    font-size: 1.15rem !important;
     max-width: calc(100% - 40px) !important;
   }
 
   .modal-body {
-    padding: 1rem !important;
+    padding: 1.15rem 1rem !important;
     box-sizing: border-box !important;
   }
 
@@ -931,6 +1003,7 @@ textarea.form-control {
     padding: 0.85rem 1rem !important;
     box-sizing: border-box !important;
     flex-wrap: wrap !important;
+    gap: 0.65rem !important;
   }
 
   .modal-footer button {
@@ -938,18 +1011,31 @@ textarea.form-control {
     min-width: 120px !important;
   }
 
-  /* CAIXAS DE TEXTO / INPUTS / TEXTAREAS DE TODAS AS PÁGINAS */
-  .form-control, .form-input, input, textarea, select {
-    font-size: 0.88rem !important;
+  /* CAIXAS DE TEXTO / INPUTS / TEXTAREAS DE TODAS AS PÁGINAS (PADRÃO HARMONIOSO) */
+  .form-control, .form-input, input[type="text"], input[type="email"], input[type="password"], input[type="number"], input[type="url"], textarea, select {
+    font-size: 0.925rem !important;
+    line-height: 1.5 !important;
+    padding: 0.75rem 0.95rem !important;
+    border-radius: 8px !important;
+    border: 1px solid #CBD5E1 !important;
+    color: #1E293B !important;
+    background: #FFFFFF !important;
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.02) !important;
+    box-sizing: border-box !important;
     width: 100% !important;
     max-width: 100% !important;
-    box-sizing: border-box !important;
-    white-space: normal !important;
-    word-break: break-word !important;
-    overflow-wrap: break-word !important;
+    transition: border-color 0.2s, box-shadow 0.2s !important;
+  }
+
+  .form-control:focus, textarea:focus, input:focus, select:focus {
+    border-color: #0284C7 !important;
+    box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15) !important;
+    outline: none !important;
   }
 
   textarea.form-control, textarea.form-input, textarea {
+    min-height: 72px !important;
     white-space: pre-wrap !important;
     word-break: break-word !important;
     overflow-wrap: break-word !important;
