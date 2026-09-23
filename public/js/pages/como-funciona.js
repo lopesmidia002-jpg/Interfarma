@@ -172,29 +172,27 @@ export async function renderComoFuncionaPage() {
       </section>
 
       <!-- SEÇÃO CARD "FAÇA JÁ SEU PEDIDO" (CONFORME DESIGN DE REFERÊNCIA) -->
-      <section class="cf-cta-section">
-        <div class="container">
-          <div class="cf-cta-wrapper">
-            <div class="cf-cta-card">
-              
-              <!-- FOTO DA EQUIPE À ESQUERDA -->
-              <div class="cf-cta-image-wrapper">
-                <img src="/asserts/equipe-sorrindo.jpg" alt="Equipe InterFarma" onerror="this.src='/asserts/Rectangle Copy 4.jpg';">
-              </div>
-
-              <!-- CONTEÚDO À DIREITA (TÍTULO + BOTÃO) -->
-              <div class="cf-cta-content">
-                <h2 class="cf-cta-title">
-                  Faça já seu pedido
-                </h2>
-                <div>
-                  <a href="/contato" class="cf-cta-btn" data-route="contato">
-                    Fale com nossos especialistas
-                  </a>
-                </div>
-              </div>
-
+      <section style="padding: 2rem 1.5rem 4.5rem 1.5rem; background: #FFFFFF;">
+        <div class="container" style="max-width: 900px;">
+          <div style="background: #F0F7FD; border-radius: 20px; padding: 2.5rem; display: flex; align-items: center; justify-content: space-between; gap: 2.5rem; box-shadow: 0 4px 20px rgba(0,0,0,0.02); flex-wrap: wrap;">
+            
+            <!-- FOTO DA EQUIPE À ESQUERDA -->
+            <div style="flex: 1; min-width: 280px; max-width: 380px;">
+              <img src="/asserts/equipe-sorrindo.jpg" alt="Equipe InterFarma" style="width: 100%; height: 210px; object-fit: cover; border-radius: 16px; display: block; box-shadow: 0 4px 14px rgba(0,0,0,0.06);" onerror="this.src='/asserts/Rectangle Copy 4.jpg';">
             </div>
+
+            <!-- CONTEÚDO À DIREITA (TÍTULO + BOTÃO) -->
+            <div style="flex: 1; min-width: 260px; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+              <h2 style="font-size: 2.2rem; font-weight: 800; color: #153258; margin-bottom: 1.5rem; letter-spacing: -0.01em;">
+                Faça já seu pedido
+              </h2>
+              <div>
+                <a href="/contato" class="btn" style="background-color: #2CA4B0; color: #FFFFFF; font-weight: 700; font-size: 0.95rem; padding: 0.85rem 2.25rem; border-radius: 6px; box-shadow: 0 4px 14px rgba(44, 164, 176, 0.4); text-decoration: none; display: inline-block; transition: all 0.2s ease;" data-route="contato">
+                  Fale com nossos especialistas
+                </a>
+              </div>
+            </div>
+
           </div>
         </div>
       </section>
