@@ -2,9 +2,8 @@ node_modules
 npm-debug.log
 .git
 .gitignore
+.agents
 .env
-data/*.sqlite*
-uploads/*
-!uploads/.gitkeep
-.vscode
-.idea
+data/*.sqlite-journal
+data/*.sqlite-wal
+data/*.sqlite-shm

@@ -1,31 +1,28 @@
-# Estágio de Build e Execução
-FROM node:20-alpine
+FROM node:20-alpine AS base
 
-# Instalar dependências nativas para compilação do better-sqlite3
+# Instalar dependências nativas para compilar better-sqlite3
 RUN apk add --no-cache python3 make g++ sqlite
 
-# Definir diretório de trabalho
 WORKDIR /app
 
-# Copiar manifesto de dependências
+# Copiar arquivos de dependências
 COPY package*.json ./
 
 # Instalar dependências de produção
 RUN npm install --omit=dev
 
-# Copiar todo o código-fonte da aplicação
+# Copiar código-fonte da aplicação
 COPY . .
 
-# Criar pastas para persistência de dados e uploads
-RUN mkdir -p data uploads
+# Criar diretórios persistentes e ajustar permissões
+RUN mkdir -p /app/data /app/uploads /app/asserts
 
-# Expor a porta padrão da aplicação
 EXPOSE 3000
 
-# Variáveis de ambiente padrão
 ENV PORT=3000
 ENV NODE_ENV=production
-ENV DB_PATH=/app/data/intelfarma.sqlite
 
-# Comando de inicialização
-CMD ["npm", "start"]
+HEALTHCHECK --interval=30s --timeout=10s --retries=3 --start-period=10s \
+  CMD node -e "fetch('http://localhost:3000/api/health').then(r => process.exit(r.ok ? 0 : 1)).catch(() => process.exit(1))"
+
+CMD ["node", "server/index.js"]
