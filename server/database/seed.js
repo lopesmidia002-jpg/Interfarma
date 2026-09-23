@@ -68,72 +68,67 @@ export function runSeed() {
       title: 'A revolução no acesso a medicamentos e gestão de saúde',
       subtitle: 'Conectamos empresas, colaboradores e farmácias em um ecossistema inteligente, econômico e 100% digital.',
       content: 'Mais de 35.000 farmácias credenciadas em todo o território nacional, com descontos de até 80% e entrega expressa.',
-      button_text: 'Conheça Nossos Planos',
-      button_link: '/empresas',
-      image_url: '/asserts/Group-551222.png',
-      badge_text: 'Plataforma Líder em Benefícios em Saúde',
+      button_text: 'Fale com nossos especialistas',
+      button_link: '/contato',
+      image_url: '/asserts/Group-589448.png',
+      badge_text: '',
       sort_order: 1,
-      extra_data: JSON.stringify({
-        stats: [
-          { number: '+2.5M', label: 'Vidas atendidas' },
-          { number: '35k+', label: 'Farmácias credenciadas' },
-          { number: '80%', label: 'Economia média em medicamentos' },
-          { number: '99.8%', label: 'Satisfação dos clientes' }
-        ]
-      })
+      extra_data: null
     },
     {
       page_slug: 'home',
-      section_key: 'features_summary',
-      title: 'Por que escolher a Intelfarma?',
-      subtitle: 'Desenvolvemos tecnologia proprietária para transformar o cuidado com a saúde em algo simples e acessível.',
-      content: 'Tenha controle total, relatórios em tempo real e um canal de atendimento humanizado 24 horas por dia.',
-      button_text: 'Ver todos os diferenciais',
-      button_link: '/diferenciais',
-      image_url: '/asserts/vaadin_doctor.svg',
-      badge_text: 'Tecnologia & Cuidado',
+      section_key: 'about_summary',
+      title: 'Um pouco sobre nós.',
+      subtitle: 'A InterFarma trabalha para auxiliar todos os brasileiros na importação de medicamentos, sem tributação alfandegária*.',
+      content: '',
+      button_text: '',
+      button_link: '',
+      image_url: '/asserts/equipe-reuniao.jpg',
+      badge_text: 'A InterFarma',
       sort_order: 2,
       extra_data: JSON.stringify({
         items: [
-          { icon: 'vaadin_doctor.svg', title: 'Suporte Médico e Farmacêutico', text: 'Orientação especializada para tirar dúvidas sobre receitas e posologia.' },
-          { icon: 'ic_round-business-center.svg', title: 'Gestão Corporativa Inteligente', text: 'Painel completo para o RH acompanhar o uso de benefícios sem burocracia.' },
-          { icon: 'ic_round-local-police.svg', title: 'Conformidade e Segurança Total', text: 'Processamento de dados em conformidade com a LGPD e altos padrões de segurança.' },
-          { icon: 'mdi_hours-24.svg', title: 'Atendimento Ágil 24/7', text: 'Canais digitais e telefônicos sempre prontos para atender você.' }
+          { icon: '/asserts/Group5576.png', title: 'Estamos no mundo todo', text: 'Contamos com uma rede global de fornecedores, estrategicamente localizados.' },
+          { icon: '/asserts/Group5577.png', title: 'Cuidamos de tudo', text: 'Nossa equipe gerencia todos os processos, cuidando de toda burocracia, até o medicamento chegar em suas mãos.' },
+          { icon: '/asserts/Group5578.png', title: 'Compromisso com prazos', text: 'Somos comprometidos com os prazos e sabemos da importância de cumpri-los.' },
+          { icon: '/asserts/feather_award.png', title: 'Certificação e infraestrutura', text: 'Somos comprometidos com os prazos e sabemos da importância de cumpri-los.' }
         ]
       })
-    },
-    {
-      page_slug: 'home',
-      section_key: 'cta_banner',
-      title: 'Pronto para transformar a saúde dos seus colaboradores?',
-      subtitle: 'Fale com um dos nossos consultores e receba uma proposta personalizada para a sua empresa.',
-      content: 'Implementação rápida em menos de 48 horas, sem custo de adesão.',
-      button_text: 'Solicitar Proposta Agora',
-      button_link: '/contato',
-      image_url: '/asserts/equipe-panoramica.png',
-      badge_text: 'Soluções Corporativas',
-      sort_order: 3,
-      extra_data: null
     },
 
     // COMO FUNCIONA
     {
       page_slug: 'como-funciona',
       section_key: 'hero',
-      title: 'Simples, ágil e 100% digital',
-      subtitle: 'Entenda como a Intelfarma facilita o acesso a medicamentos e simplifica a gestão de saúde para todos.',
-      content: 'Desde o cadastro da empresa até a retirada ou entrega do medicamento, cuidamos de cada detalhe com transparência.',
-      button_text: 'Começar Agora',
-      button_link: '/empresas',
-      image_url: '/asserts/Group-56144.png',
-      badge_text: 'Passo a Passo Transparente',
+      title: 'Como funciona',
+      subtitle: 'Confira todo o processo da InterFarma',
+      content: 'A InterFarma trabalha para auxiliar todos os brasileiros na importação de medicamentos, sem tributação alfandegária*.',
+      button_text: '',
+      button_link: '',
+      image_url: '/asserts/hero-header-bg.png',
+      badge_text: '',
       sort_order: 1,
+      extra_data: null
+    },
+    {
+      page_slug: 'como-funciona',
+      section_key: 'steps',
+      title: 'Fluxo do Processo InterFarma',
+      subtitle: '6 etapas transparentes desde a prescrição até a entrega',
+      content: '',
+      button_text: '',
+      button_link: '',
+      image_url: '',
+      badge_text: 'Passo a Passo',
+      sort_order: 2,
       extra_data: JSON.stringify({
         steps: [
-          { step: '01', title: 'Adesão Corporativa Simples', desc: 'A empresa cadastra seus colaboradores na plataforma com poucos cliques.' },
-          { step: '02', title: 'Identificação no App ou Farmácia', desc: 'O colaborador apresenta o CPF ou cartão digital em qualquer farmácia credenciada.' },
-          { step: '03', title: 'Desconto Imediato na Linha de Caixa', desc: 'O sistema autoriza o benefício instantaneamente com os melhores descontos do mercado.' },
-          { step: '04', title: 'Relatórios e Gestão em Tempo Real', desc: 'O RH tem acesso a métricas consolidadas, sem surpresas na fatura.' }
+          { step: '01', title: 'Prescrição Médica', desc: 'Uma prescrição é uma rotina de cuidados com a saúde, implementados por um médico ou outro profissional de saúde qualificado, voltados para um paciente em específico.' },
+          { step: '02', title: 'Fornecedores', desc: 'Verificamos a disponibilidade nos fornecedores exclusivos e qualificados espalhados em vários países que forneça o melhor custo benefício e menor prazo de embarque.' },
+          { step: '03', title: 'Proposta Comercial', desc: 'Apresentamos ao cliente todas as informações necessárias sobre o medicamento, como: fabricante, dosagem, quantidade, prazo e custo total.' },
+          { step: '04', title: 'Pagamento', desc: 'O pagamento é efetuado através de transferência bancária ou boleto, garantindo total segurança na transação financeira internacional.' },
+          { step: '05', title: 'Envio & Logística', desc: 'O medicamento é despachado com controle rigoroso de temperatura e rastreamento em tempo real por nossa equipe técnica.' },
+          { step: '06', title: 'Entrega no Destino', desc: 'O medicamento chega com total segurança no endereço indicado ou na clínica/hospital responsável pelo tratamento.' }
         ]
       })
     },
@@ -142,20 +137,76 @@ export function runSeed() {
     {
       page_slug: 'diferenciais',
       section_key: 'hero',
-      title: 'Nossos Diferenciais Competitivos',
-      subtitle: 'A combinação perfeita entre tecnologia de ponta, ampla cobertura e compromisso humano.',
-      content: 'Descubra por que mais de 500 empresas confiam na Intelfarma para cuidar de seus colaboradores.',
-      button_text: 'Conheça nossos planos',
-      button_link: '/empresas',
-      image_url: '/asserts/supervisor-licencas.jpg',
-      badge_text: 'Vantagens Exclusivas',
+      title: 'Diferenciais',
+      subtitle: 'Todas as vantagens em contar com a InterFarma',
+      content: '',
+      button_text: '',
+      button_link: '',
+      image_url: '/asserts/hero-header-bg.png',
+      badge_text: '',
       sort_order: 1,
+      extra_data: null
+    },
+    {
+      page_slug: 'diferenciais',
+      section_key: 'licencas',
+      title: 'Possuímos todas as licenças exigidas pelos órgãos reguladores.',
+      subtitle: 'Conformidade total e rigor técnico em todas as etapas de importação.',
+      content: '',
+      button_text: '',
+      button_link: '',
+      image_url: '/asserts/supervisor-licencas.jpg',
+      badge_text: 'Regulamentação',
+      sort_order: 2,
       extra_data: JSON.stringify({
-        pillars: [
-          { title: 'Maior Rede Credenciada', desc: 'Parceria com as maiores redes de farmácias do Brasil (Droga Raia, Drogasil, Pague Menos, São Paulo, Pacheco e milhares de farmácias independentes).' },
-          { title: 'Economia Comprovada', desc: 'Negociação direta com grandes laboratórios farmacêuticos garantindo as menores tabelas de preço.' },
-          { title: 'Integração Simples', desc: 'APIs modernas e integração direta com os principais sistemas de folha de pagamento e RH.' },
-          { title: 'Auditoria e Compliance', desc: 'Processamento de receitas e regras de subsídio automatizadas com total conformidade.' }
+        licenses: [
+          { title: 'ANVISA', desc: 'Autorização para importação, distribuição, armazenamento de medicamentos, cosméticos, correlatos e alimentos.' },
+          { title: 'CRF / Farmacêutico', desc: 'Responsabilidade técnica integral com farmacêuticos habilitados em tempo integral.' },
+          { title: 'Licença Sanitária', desc: 'Alvará sanitário estadual e municipal com vistorias periódicas atualizadas.' },
+          { title: 'Certificado de Boas Práticas', desc: 'Certificação de boas práticas de distribuição, armazenagem e transporte.' },
+          { title: 'Rastreabilidade', desc: 'Controle de lote e validade com sistema de auditoria eletrônica 100% integrado.' },
+          { title: 'Cadeia Fria Qualificada', desc: 'Equipamentos calibrados e validados para medicamentos termolábeis.' }
+        ]
+      })
+    },
+    {
+      page_slug: 'diferenciais',
+      section_key: 'tecnologia',
+      title: 'Tecnologia e Investimento',
+      subtitle: 'Estrutura de ponta para garantir qualidade e segurança.',
+      content: '',
+      button_text: '',
+      button_link: '',
+      image_url: '/asserts/analista-tecnologia.jpg',
+      badge_text: 'Infraestrutura',
+      sort_order: 3,
+      extra_data: JSON.stringify({
+        features: [
+          { title: 'Nossa Estrutura', desc: 'Nossas estruturas contam com laboratórios físico químicos e microbiológicos - RDC 10/2011' },
+          { title: 'Monitoramento da Carga', desc: 'Rastreamento contínuo em tempo real durante todo o trajeto internacional e nacional.' },
+          { title: 'Software de Temperatura', desc: 'Sensores térmicos conectados que registram a curva de temperatura minuto a minuto.' },
+          { title: 'Sistema de Dados', desc: 'Plataforma em nuvem com criptografia de ponta a ponta e compliance LGPD.' },
+          { title: 'Veículo Próprio', desc: 'Frota dedicada e climatizada para transportes prioritários e urgentes.' },
+          { title: 'Acompanhamento do Paciente', desc: 'Suporte humanizado e canal direto para esclarecimento de dúvidas e orientações.' }
+        ]
+      })
+    },
+    {
+      page_slug: 'diferenciais',
+      section_key: 'valores',
+      title: 'Nossos Princípios & Valores',
+      subtitle: 'Missão, Visão e Valores que guiam cada uma de nossas ações',
+      content: '',
+      button_text: '',
+      button_link: '',
+      image_url: '',
+      badge_text: 'Diretrizes',
+      sort_order: 4,
+      extra_data: JSON.stringify({
+        values: [
+          { title: 'Nossa Missão', desc: 'Proporcionar ao paciente a segurança, confiabilidade com honestidade durante a aquisição de medicamentos qualificados visando o melhor tratamento.' },
+          { title: 'Nossa Visão', desc: 'Ser uma empresa de referência internacional com excelência na assessoria de importação de medicamentos.' },
+          { title: 'Nossos Valores', desc: 'Honestidade, Respeito, Excelência, Integridade e Compromisso social.' }
         ]
       })
     },
@@ -164,19 +215,35 @@ export function runSeed() {
     {
       page_slug: 'empresas',
       section_key: 'hero',
-      title: 'Benefício em medicamentos que valoriza sua equipe',
-      subtitle: 'Aumente o engajamento, reduza o absenteísmo e proporcione bem-estar real para seus colaboradores.',
-      content: 'Planos flexíveis com subsídio total, parcial ou apenas desconto em folha, adaptados ao orçamento da sua empresa.',
-      button_text: 'Simular Benefício Corporativo',
-      button_link: '/contato',
-      image_url: '/asserts/Group-589448.png',
-      badge_text: 'Soluções para Recursos Humanos',
+      title: 'Empresas',
+      subtitle: 'Todas as vantagens em contar com a InterFarma',
+      content: '',
+      button_text: '',
+      button_link: '',
+      image_url: '/asserts/hero-header-bg.png',
+      badge_text: '',
       sort_order: 1,
+      extra_data: null
+    },
+    {
+      page_slug: 'empresas',
+      section_key: 'empresas_atendidas',
+      title: 'Empresas que atendemos',
+      subtitle: 'Soluções customizadas para diferentes segmentos da saúde',
+      content: '',
+      button_text: '',
+      button_link: '',
+      image_url: '',
+      badge_text: 'Segmentos B2B',
+      sort_order: 2,
       extra_data: JSON.stringify({
-        plans: [
-          { name: 'Essencial', desc: 'Acesso à rede credenciada com descontos exclusivos de até 80% sem custo para a empresa.', features: ['Descontos em 35.000+ farmácias', 'Cartão digital para colaboradores', 'Suporte ao RH', 'Sem custo mensal'] },
-          { name: 'Corporativo Plus', desc: 'Desconto em folha e subsídio customizável por nível ou cargo.', features: ['Tudo do Essencial', 'Subsídio flexível (20% a 100%)', 'Desconto em folha de pagamento', 'Relatórios analíticos de uso', 'Gerente de contas dedicado'] },
-          { name: 'Enterprise Saúde 360', desc: 'Ecossistema completo com telemedicina, entrega domiciliar e gestão de crônicos.', features: ['Tudo do Plus', 'Programa de medicamentos contínuos', 'Telemedicina inclusa', 'Entrega delivery prioritária', 'Dashboard BI executivo'] }
+        clients: [
+          { title: 'Clínicas', desc: 'Atendimento ágil para clínicas médicas e de infusão com fornecimento direto e pontual.' },
+          { title: 'Hospitais Públicos', desc: 'Assessoria completa em processos de importação emergencial e licitações em saúde.' },
+          { title: 'Distribuidoras', desc: 'Parcerias estratégicas para suprimento de produtos especiais e demandas específicas.' },
+          { title: 'Indústrias', desc: 'Programas de benefícios corporativos e suporte farmacêutico empresarial.' },
+          { title: 'Hospitais Privados', desc: 'Fornecimento contínuo de itens de alto custo e suporte em protocolos complexos.' },
+          { title: 'Secretarias de Saúde', desc: 'Gestão transparente em demandas judiciais e atendimento prioritário a pacientes.' }
         ]
       })
     },
@@ -185,17 +252,15 @@ export function runSeed() {
     {
       page_slug: 'medicamentos',
       section_key: 'hero',
-      title: 'Guia e Catálogo de Medicamentos',
-      subtitle: 'Consulte medicamentos, genéricos, valores de referência e descontos disponíveis na rede Intelfarma.',
-      content: 'Busque pelo nome comercial, princípio ativo ou categoria terapêutica.',
-      button_text: 'Consultar Rede Credenciada',
-      button_link: '/como-funciona',
-      image_url: '/asserts/Group-56088.png',
-      badge_text: 'Economia e Transparência',
+      title: 'Medicamentos',
+      subtitle: 'Consulte medicamentos, genéricos e valores de referência disponíveis',
+      content: '',
+      button_text: '',
+      button_link: '',
+      image_url: '/asserts/hero-header-bg.png',
+      badge_text: '',
       sort_order: 1,
-      extra_data: JSON.stringify({
-        categories: ['Todos', 'Genéricos', 'Uso Contínuo', 'Analgésicos', 'Antibióticos', 'Cardiologia', 'Dermatologia', 'Vitaminas & Suplementos']
-      })
+      extra_data: null
     },
 
     // FAQ
@@ -203,12 +268,12 @@ export function runSeed() {
       page_slug: 'faq',
       section_key: 'hero',
       title: 'Perguntas Frequentes (FAQ)',
-      subtitle: 'Tire suas dúvidas sobre o funcionamento do benefício, farmácias credenciadas, faturamento e suporte.',
-      content: 'Não encontrou o que procurava? Nossa equipe está disponível no WhatsApp e nos canais de atendimento.',
-      button_text: 'Falar com Atendimento',
-      button_link: '/contato',
-      image_url: '/asserts/Group-55999.png',
-      badge_text: 'Central de Ajuda',
+      subtitle: 'Tire suas dúvidas sobre o funcionamento do benefício e suporte',
+      content: '',
+      button_text: '',
+      button_link: '',
+      image_url: '/asserts/hero-header-bg.png',
+      badge_text: '',
       sort_order: 1,
       extra_data: null
     },
@@ -217,13 +282,13 @@ export function runSeed() {
     {
       page_slug: 'blog',
       section_key: 'hero',
-      title: 'Blog Intelfarma: Saúde, Gestão e Bem-Estar',
-      subtitle: 'Artigos, estudos e dicas práticas de especialistas sobre saúde corporativa, medicamentos e qualidade de vida.',
-      content: 'Fique por dentro das últimas tendências e novidades do setor de saúde.',
-      button_text: 'Explorar Artigos',
-      button_link: '#posts',
-      image_url: '/asserts/InterFarma-Blog.jpg',
-      badge_text: 'Conteúdo Especializado',
+      title: 'Blog InterFarma',
+      subtitle: 'Artigos, estudos e novidades sobre saúde, medicamentos e importação',
+      content: '',
+      button_text: '',
+      button_link: '',
+      image_url: '/asserts/hero-header-bg.png',
+      badge_text: '',
       sort_order: 1,
       extra_data: null
     },
@@ -232,17 +297,15 @@ export function runSeed() {
     {
       page_slug: 'contato',
       section_key: 'hero',
-      title: 'Entre em contato com nossa equipe',
-      subtitle: 'Estamos prontos para esclarecer suas dúvidas, apresentar propostas corporativas ou oferecer suporte.',
-      content: 'Preencha o formulário ou fale conosco através de nossos canais diretos.',
-      button_text: 'Enviar Mensagem',
-      button_link: '#form',
-      image_url: '/asserts/InterFarma-Contato.jpg',
-      badge_text: 'Atendimento Rápido',
+      title: 'Entre em contato',
+      subtitle: 'Todas as vantagens em contar com a InterFarma',
+      content: '',
+      button_text: '',
+      button_link: '',
+      image_url: '/asserts/hero-header-bg.png',
+      badge_text: '',
       sort_order: 1,
-      extra_data: JSON.stringify({
-        horario: 'Segunda a Sexta das 08h às 18h / Suporte 24h via canal digital'
-      })
+      extra_data: null
     }
   ];
 

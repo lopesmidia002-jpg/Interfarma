@@ -11,6 +11,8 @@ import { renderMedicines } from './views/medicines.js';
 import { renderBlog } from './views/blog.js';
 import { renderFaqs } from './views/faqs.js';
 import { renderMessages } from './views/messages.js';
+import { renderProfile } from './views/profile.js';
+import { renderUsers } from './views/users.js';
 
 let currentView = 'dashboard';
 
@@ -46,6 +48,7 @@ export async function initAdminApp() {
             <img src="/asserts/IF_Logo Vetorizado 1.png" alt="Interfarma" onerror="this.style.display='none';">
             <span>Interfarma CMS</span>
           </div>
+          <button type="button" id="btn-close-sidebar" class="btn-close-sidebar" aria-label="Fechar Menu">&times;</button>
         </div>
 
         <ul class="sidebar-menu">
@@ -139,6 +142,20 @@ export async function initAdminApp() {
             </a>
           </li>
 
+          <li class="sidebar-heading">Usuários & Conta</li>
+          <li class="sidebar-item ${currentView === 'users' ? 'active' : ''}">
+            <a data-view="users">
+              <span>👥</span>
+              <span>Usuários & Acessos</span>
+            </a>
+          </li>
+          <li class="sidebar-item ${currentView === 'profile' ? 'active' : ''}">
+            <a data-view="profile">
+              <span>👤</span>
+              <span>Meu Perfil</span>
+            </a>
+          </li>
+
           <li class="sidebar-heading" style="margin-top: 1rem;">Acesso</li>
           <li class="sidebar-item">
             <a href="/" target="_blank">
@@ -155,18 +172,28 @@ export async function initAdminApp() {
         </ul>
       </aside>
 
+      <!-- OVERLAY PARA MOBILE -->
+      <div class="admin-sidebar-overlay" id="admin-sidebar-overlay"></div>
+
       <!-- ÁREA PRINCIPAL -->
       <main class="admin-main">
         <!-- TOPBAR -->
         <header class="admin-topbar">
           <div class="topbar-left">
-            <h2 id="topbar-title">Dashboard</h2>
+            <button type="button" id="btn-sidebar-toggle" class="btn-sidebar-toggle" aria-label="Abrir Menu">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+                <line x1="3" y1="12" x2="21" y2="12"></line>
+                <line x1="3" y1="18" x2="21" y2="18"></line>
+              </svg>
+            </button>
+            <h2 id="topbar-title">Dashboard & Métricas</h2>
           </div>
 
           <div class="topbar-right">
-            <div class="user-profile-badge" id="btn-user-profile">
-              <div class="user-avatar">${user.name ? user.name.charAt(0).toUpperCase() : 'A'}</div>
-              <span style="font-size: 0.875rem; font-weight: 600;">${user.name || 'Admin'}</span>
+            <div class="user-profile-badge" id="btn-user-profile" title="Ver Meu Perfil" style="cursor: pointer;">
+              <div class="user-avatar">${user.name ? user.name.charAt(0).toUpperCase() : 'I'}</div>
+              <span class="user-name-text" style="font-size: 0.875rem; font-weight: 600;">${user.name || 'Interfarma'}</span>
             </div>
           </div>
         </header>
@@ -180,11 +207,42 @@ export async function initAdminApp() {
   // Carregar a View inicial
   await switchView(currentView);
 
-  // Listeners da Sidebar
+  // Controle do Menu Mobile (Sidebar & Overlay)
+  const sidebar = document.getElementById('admin-sidebar');
+  const overlay = document.getElementById('admin-sidebar-overlay');
+  const toggleBtn = document.getElementById('btn-sidebar-toggle');
+  const closeBtn = document.getElementById('btn-close-sidebar');
+
+  function openSidebar() {
+    sidebar?.classList.add('open');
+    overlay?.classList.add('active');
+  }
+
+  function closeSidebar() {
+    sidebar?.classList.remove('open');
+    overlay?.classList.remove('active');
+  }
+
+  toggleBtn?.addEventListener('click', openSidebar);
+  closeBtn?.addEventListener('click', closeSidebar);
+  overlay?.addEventListener('click', closeSidebar);
+
+  // Clique no avatar do topo abre o Perfil
+  document.getElementById('btn-user-profile')?.addEventListener('click', () => {
+    switchView('profile');
+    if (window.innerWidth <= 900) {
+      closeSidebar();
+    }
+  });
+
+  // Listeners da Sidebar (fecha no mobile ao clicar em item)
   root.querySelectorAll('.sidebar-item a[data-view]').forEach(item => {
     item.addEventListener('click', (e) => {
       const view = item.getAttribute('data-view');
       switchView(view);
+      if (window.innerWidth <= 900) {
+        closeSidebar();
+      }
     });
   });
 
@@ -218,21 +276,38 @@ async function switchView(viewName) {
   } else if (viewName === 'settings') {
     if (topbarTitle) topbarTitle.textContent = 'Identidade Visual & Cores';
     await renderSettings(container);
+  } else if (viewName === 'users') {
+    if (topbarTitle) topbarTitle.textContent = 'Usuários & Permissões';
+    await renderUsers(container);
+  } else if (viewName === 'profile') {
+    if (topbarTitle) topbarTitle.textContent = 'Meu Perfil & Segurança';
+    await renderProfile(container);
   } else if (viewName.startsWith('page-')) {
     const slug = viewName.replace('page-', '');
-    if (topbarTitle) topbarTitle.textContent = `Edição de Elementos: ${slug.toUpperCase()}`;
+    const pageLabels = {
+      'home': 'Home',
+      'como-funciona': 'Como Funciona',
+      'diferenciais': 'Diferenciais',
+      'empresas': 'Empresas B2B',
+      'medicamentos': 'Medicamentos',
+      'faq': 'FAQ',
+      'blog': 'Blog',
+      'contato': 'Contato'
+    };
+    const label = pageLabels[slug] || slug.toUpperCase();
+    if (topbarTitle) topbarTitle.textContent = `Edição: Página ${label}`;
     await renderPageEditor(container, slug);
   } else if (viewName === 'medicines') {
-    if (topbarTitle) topbarTitle.textContent = 'Gerenciador de Medicamentos';
+    if (topbarTitle) topbarTitle.textContent = 'Medicamentos';
     await renderMedicines(container);
   } else if (viewName === 'blog') {
-    if (topbarTitle) topbarTitle.textContent = 'Gerenciador do Blog';
+    if (topbarTitle) topbarTitle.textContent = 'Artigos do Blog';
     await renderBlog(container);
   } else if (viewName === 'faqs') {
-    if (topbarTitle) topbarTitle.textContent = 'Gerenciador de FAQs';
+    if (topbarTitle) topbarTitle.textContent = 'Perguntas FAQ';
     await renderFaqs(container);
   } else if (viewName === 'messages') {
-    if (topbarTitle) topbarTitle.textContent = 'Mensagens e Leads de Contato';
+    if (topbarTitle) topbarTitle.textContent = 'Mensagens & Leads';
     await renderMessages(container);
   }
 }

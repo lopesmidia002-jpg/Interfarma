@@ -91,7 +91,7 @@ export async function renderSettings(container) {
 
           <div class="form-group">
             <label class="form-label">Slogan Institucional</label>
-            <input type="text" class="form-control" id="set-slogan" value="${settings.slogan || ''}">
+            <textarea class="form-control" id="set-slogan" rows="2" style="resize: vertical; min-height: 48px;">${settings.slogan || ''}</textarea>
           </div>
 
           <div class="form-grid-3">
@@ -113,7 +113,7 @@ export async function renderSettings(container) {
 
           <div class="form-group">
             <label class="form-label">Endereço Completo</label>
-            <input type="text" class="form-control" id="set-address" value="${settings.address || ''}">
+            <textarea class="form-control" id="set-address" rows="2" style="resize: vertical; min-height: 48px;">${settings.address || ''}</textarea>
           </div>
         </div>
 

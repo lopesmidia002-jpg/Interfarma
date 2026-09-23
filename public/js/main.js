@@ -11,6 +11,7 @@ import { renderComoFuncionaPage } from './pages/como-funciona.js';
 import { renderDiferenciaisPage } from './pages/diferenciais.js';
 import { renderEmpresasPage } from './pages/empresas.js';
 import { renderMedicamentosPage } from './pages/medicamentos.js';
+import { renderMedicamentoDetalhesPage } from './pages/medicamento-detalhes.js';
 import { renderFaqPage } from './pages/faq.js';
 import { renderBlogPage } from './pages/blog.js';
 import { renderContatoPage } from './pages/contato.js';
@@ -34,6 +35,17 @@ function getRouteInfo(pathname) {
   if (routes[cleanPath]) {
     const routeKey = cleanPath === '/' ? 'home' : cleanPath.replace('/', '');
     return { handler: routes[cleanPath], routeKey, param: null };
+  }
+
+  // Verificar rota de detalhes do medicamento (/medicamento/:name ou /medicamentos/:name)
+  if (cleanPath.startsWith('/medicamento/')) {
+    const param = decodeURIComponent(cleanPath.replace('/medicamento/', ''));
+    return { handler: renderMedicamentoDetalhesPage, routeKey: 'medicamentos', param };
+  }
+
+  if (cleanPath.startsWith('/medicamentos/') && cleanPath !== '/medicamentos') {
+    const param = decodeURIComponent(cleanPath.replace('/medicamentos/', ''));
+    return { handler: renderMedicamentoDetalhesPage, routeKey: 'medicamentos', param };
   }
 
   // Verificar rota de post do blog (/blog/:slug)

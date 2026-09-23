@@ -52,15 +52,30 @@ export async function renderFaqPage() {
     // Manter lista padrão
   }
 
+  let pageData = null;
+  try {
+    pageData = await api.getPage('faq');
+  } catch (e) {
+    pageData = null;
+  }
+  const sec = pageData?.data || {};
+
+  const heroTitle = sec.hero?.title || 'FAQ';
+  const heroSubtitle = sec.hero?.subtitle || 'Tire suas dúvidas sobre nossos serviços';
+  const heroBg = sec.hero?.image_url ? `background-image: url('${sec.hero.image_url}');` : '';
+
   app.innerHTML = `
     <div style="background: #FFFFFF;">
       <!-- HERO BANNER DA PÁGINA (FOTO COM TÍTULO 'FAQ' CENTRALIZADO) -->
-      <section class="page-hero-header">
+      <section class="page-hero-header" style="${heroBg}">
         <div class="page-hero-header-overlay"></div>
         <div class="page-hero-header-content">
           <h1 class="page-hero-header-title">
-            FAQ
+            ${heroTitle}
           </h1>
+          <p class="page-hero-header-subtitle">
+            ${heroSubtitle}
+          </p>
         </div>
       </section>
 

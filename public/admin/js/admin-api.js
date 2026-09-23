@@ -89,6 +89,31 @@ export const adminApi = {
     });
   },
 
+  // Gerenciamento de Usuários
+  async getUsers() {
+    return await this.request('/auth/users');
+  },
+
+  async createUser(data) {
+    return await this.request('/auth/users', {
+      method: 'POST',
+      body: JSON.stringify(data)
+    });
+  },
+
+  async updateUser(id, data) {
+    return await this.request(`/auth/users/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify(data)
+    });
+  },
+
+  async deleteUser(id) {
+    return await this.request(`/auth/users/${id}`, {
+      method: 'DELETE'
+    });
+  },
+
   // Configurações Globais (Cores, Logos, Contatos)
   async getSettings() {
     return await this.request('/settings');

@@ -18,7 +18,8 @@ export async function renderBlog(container) {
       </div>
 
       <div class="admin-card">
-        <div class="table-responsive">
+        <!-- VISÃO TABELA (DESKTOP) -->
+        <div class="table-responsive desktop-table-view">
           <table class="admin-table">
             <thead>
               <tr>
@@ -60,6 +61,32 @@ export async function renderBlog(container) {
             </tbody>
           </table>
         </div>
+
+        <!-- VISÃO CARDS RESPONSIVOS (MOBILE) -->
+        <div class="mobile-card-view">
+          ${(posts || []).length === 0 ? `
+            <div style="text-align: center; color: var(--admin-text-muted); padding: 2rem;">Nenhum artigo publicado.</div>
+          ` : (posts || []).map(p => `
+            <div class="adm-mobile-card" data-id="${p.id}">
+              <div style="display: flex; gap: 0.85rem; align-items: flex-start;">
+                <img src="${p.cover_image || '/asserts/InterFarma-Blog.jpg'}" alt="${p.title}" style="width: 65px; height: 48px; object-fit: cover; border-radius: var(--radius-sm); border: 1px solid var(--admin-border); flex-shrink: 0;">
+                <div style="flex: 1; min-width: 0;">
+                  <h3 style="font-size: 0.98rem; font-weight: 700; color: #0F172A; margin-bottom: 0.25rem; line-height: 1.3;">${p.title}</h3>
+                  <div style="display: flex; gap: 0.4rem; flex-wrap: wrap; align-items: center;">
+                    <span class="badge" style="font-size: 0.72rem;">${p.category}</span>
+                    <span style="font-size: 0.72rem; font-weight: 700; padding: 2px 6px; border-radius: 4px; ${p.is_published ? 'background: #DCFCE7; color: #166534;' : 'background: #FEE2E2; color: #DC2626;'}">
+                      ${p.is_published ? 'Publicado' : 'Rascunho'}
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="adm-mobile-card-actions">
+                <button class="btn-adm btn-adm-primary btn-adm-sm btn-edit-post" data-id="${p.id}">✏️ Editar Artigo</button>
+                <button class="btn-adm btn-adm-danger btn-adm-sm btn-del-post" data-id="${p.id}" data-title="${p.title}" style="flex: 0 0 46px;" title="Excluir">🗑️</button>
+              </div>
+            </div>
+          `).join('')}
+        </div>
       </div>
 
       <!-- MODAL CRIAR / EDITAR POST -->
@@ -75,7 +102,7 @@ export async function renderBlog(container) {
 
               <div class="form-group" style="margin-bottom: 1.25rem;">
                 <label class="form-label" style="font-weight: 600; color: #1E293B; margin-bottom: 0.4rem;">Título do Artigo *</label>
-                <input type="text" id="post-title" class="form-control" required placeholder="Ex: Como o Benefício de Medicamentos Reduz o Absenteísmo" style="font-size: 0.95rem; font-weight: 600;">
+                <textarea id="post-title" class="form-control" rows="2" required placeholder="Ex: Como o Benefício de Medicamentos Reduz o Absenteísmo" style="font-size: 0.95rem; font-weight: 600; resize: vertical; min-height: 54px;"></textarea>
               </div>
 
               <div class="form-grid-3" style="margin-bottom: 1.25rem;">

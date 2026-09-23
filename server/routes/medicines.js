@@ -51,10 +51,21 @@ router.get('/', (req, res) => {
   }
 });
 
-// GET /api/medicines/:id
+// GET /api/medicines/:id (Suporte a ID numérico ou nome/slug)
 router.get('/:id', (req, res) => {
   try {
-    const med = db.prepare('SELECT * FROM medicines WHERE id = ?').get(req.params.id);
+    const param = req.params.id;
+    let med = null;
+
+    if (!isNaN(param)) {
+      med = db.prepare('SELECT * FROM medicines WHERE id = ?').get(param);
+    }
+
+    if (!med) {
+      const decoded = decodeURIComponent(param).replace(/-/g, ' ').trim();
+      med = db.prepare('SELECT * FROM medicines WHERE LOWER(name) = LOWER(?) OR LOWER(name) LIKE LOWER(?)').get(decoded, `%${decoded}%`);
+    }
+
     if (!med) {
       return res.status(404).json({ error: 'Medicamento não encontrado.' });
     }

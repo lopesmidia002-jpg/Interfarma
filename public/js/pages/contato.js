@@ -4,17 +4,29 @@ import { showToast } from '../components.js';
 export async function renderContatoPage() {
   const app = document.getElementById('app');
 
+  let pageData = null;
+  try {
+    pageData = await api.getPage('contato');
+  } catch (e) {
+    pageData = null;
+  }
+  const sec = pageData?.data || {};
+
+  const heroTitle = sec.hero?.title || 'Entre em contato';
+  const heroSubtitle = sec.hero?.subtitle || 'Todas as vantagens em contar com a InterFarma';
+  const heroBg = sec.hero?.image_url ? `background-image: url('${sec.hero.image_url}');` : '';
+
   app.innerHTML = `
     <div style="background: #FFFFFF;">
       <!-- HERO BANNER DA PÁGINA (FOTO INSTITUCIONAL COM TÍTULO E SUBTÍTULO) -->
-      <section class="page-hero-header">
+      <section class="page-hero-header" style="${heroBg}">
         <div class="page-hero-header-overlay"></div>
         <div class="page-hero-header-content">
           <h1 class="page-hero-header-title">
-            Entre em contato
+            ${heroTitle}
           </h1>
           <p class="page-hero-header-subtitle">
-            Todas as vantagens em contar com a InterFarma
+            ${heroSubtitle}
           </p>
         </div>
       </section>

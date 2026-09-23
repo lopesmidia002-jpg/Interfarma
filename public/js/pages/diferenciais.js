@@ -12,20 +12,58 @@ export async function renderDiferenciaisPage() {
   }
   const sec = pageData?.data || {};
 
-  const supervisorImg = sec.hero?.image_url || '/asserts/supervisor-licencas.jpg';
-  const techImg = sec.features_summary?.image_url || '/asserts/analista-tecnologia.jpg';
+  const heroTitle = sec.hero?.title || 'Diferenciais';
+  const heroSubtitle = sec.hero?.subtitle || 'Todas as vantagens em contar com a InterFarma';
+  const heroBg = sec.hero?.image_url ? `background-image: url('${sec.hero.image_url}');` : '';
+
+  const supervisorImg = sec.licencas?.image_url || sec.hero?.image_url || '/asserts/supervisor-licencas.jpg';
+  const licencasTitle = sec.licencas?.title || 'Possuímos todas as licenças exigidas pelos órgãos reguladores.';
+  const defaultLicenses = [
+    { title: 'ANVISA', desc: 'Autorização para importação, distribuição, armazenamento de medicamentos, cosméticos, correlatos e alimentos.' },
+    { title: 'ANVISA', desc: 'Autorização para importação, distribuição, armazenamento de medicamentos, cosméticos, correlatos e alimentos.' },
+    { title: 'ANVISA', desc: 'Autorização para importação, distribuição, armazenamento de medicamentos, cosméticos, correlatos e alimentos.' },
+    { title: 'ANVISA', desc: 'Autorização para importação, distribuição, armazenamento de medicamentos, cosméticos, correlatos e alimentos.' },
+    { title: 'ANVISA', desc: 'Autorização para importação, distribuição, armazenamento de medicamentos, cosméticos, correlatos e alimentos.' },
+    { title: 'ANVISA', desc: 'Autorização para importação, distribuição, armazenamento de medicamentos, cosméticos, correlatos e alimentos.' }
+  ];
+  const licenses = (sec.licencas?.extra_data?.licenses && sec.licencas.extra_data.licenses.length > 0)
+    ? sec.licencas.extra_data.licenses
+    : defaultLicenses;
+
+  const techImg = sec.tecnologia?.image_url || sec.features_summary?.image_url || '/asserts/analista-tecnologia.jpg';
+  const techTitle = sec.tecnologia?.title || 'Tecnologia e Investimento';
+  const defaultFeatures = [
+    { title: 'Nossa Estrutura', desc: 'Nossas estruturas contam com laboratórios físico químicos e microbiológicos - RDC 10/2011' },
+    { title: 'Monitoramento da Carga', desc: 'Nossas estruturas contam com laboratórios físico químicos e microbiológicos - RDC 10/2011' },
+    { title: 'Software de Monitoramento de Temperatura', desc: 'Nossas estruturas contam com laboratórios físico químicos e microbiológicos - RDC 10/2011' },
+    { title: 'Sistema de dados', desc: 'Nossas estruturas contam com laboratórios físico químicos e microbiológicos - RDC 10/2011' },
+    { title: 'Veículo Próprio para Transporte', desc: 'Nossas estruturas contam com laboratórios físico químicos e microbiológicos - RDC 10/2011' },
+    { title: 'Acompanhamento do Tratamento do Paciente', desc: 'Nossas estruturas contam com laboratórios físico químicos e microbiológicos - RDC 10/2011' }
+  ];
+  const features = (sec.tecnologia?.extra_data?.features && sec.tecnologia.extra_data.features.length > 0)
+    ? sec.tecnologia.extra_data.features
+    : defaultFeatures;
+
+  const defaultValues = [
+    { title: 'Nossa Missão', desc: 'Proporcionar ao paciente a segurança, confiabilidade com honestidade durante a aquisição de medicamentos qualificados visando o melhor tratamento.' },
+    { title: 'Nossa Visão', desc: 'Ser uma empresa de referência internacional com excelência na assessoria de importação de medicamentos.' },
+    { title: 'Nossos Valores', desc: 'Honestidade, Respeito, Excelência, Integridade e Compromisso social.' }
+  ];
+  const values = (sec.valores?.extra_data?.values && sec.valores.extra_data.values.length > 0)
+    ? sec.valores.extra_data.values
+    : defaultValues;
 
   app.innerHTML = `
     <div style="background: #FFFFFF;">
       <!-- HERO BANNER DA PÁGINA (FOTO INSTITUCIONAL COM TÍTULO E SUBTÍTULO) -->
-      <section class="page-hero-header">
+      <section class="page-hero-header" style="${heroBg}">
         <div class="page-hero-header-overlay"></div>
         <div class="page-hero-header-content">
           <h1 class="page-hero-header-title">
-            Diferenciais
+            ${heroTitle}
           </h1>
           <p class="page-hero-header-subtitle">
-            Todas as vantagens em contar com a InterFarma
+            ${heroSubtitle}
           </p>
         </div>
       </section>
@@ -37,8 +75,12 @@ export async function renderDiferenciaisPage() {
             
             <!-- FOTO DO SUPERVISOR COM ADORNOS (ESQUERDA) -->
             <div class="dif-photo-container">
-              <div class="dif-blob-tl"></div>
               <div class="dif-photo-backdrop-blue"></div>
+              <div class="dif-blob-tl">
+                <svg width="34" height="34" viewBox="0 0 100 100" fill="none" stroke="#FFFFFF" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.9">
+                  <path d="M20 45 C30 20, 60 25, 75 40 C90 55, 65 85, 45 75 C25 65, 30 40, 55 35 C70 30, 80 50, 70 65"/>
+                </svg>
+              </div>
               <div class="dif-photo-frame">
                 <img src="${supervisorImg}" alt="Licenças InterFarma" onerror="this.src='/asserts/supervisor-licencas.jpg';">
               </div>
@@ -47,52 +89,18 @@ export async function renderDiferenciaisPage() {
             <!-- TEXTOS E LISTA DE LICENÇAS ANVISA (DIREITA - 2 COLUNAS) -->
             <div>
               <h2 class="dif-heading-navy">
-                Possuímos todas as licenças exigidas pelos órgãos reguladores.
+                ${licencasTitle}
               </h2>
 
               <div class="dif-licenses-grid">
-                <!-- ITEM 1 -->
-                <div class="dif-license-item">
-                  <h4 class="dif-license-title">ANVISA</h4>
-                  <p class="dif-license-desc">
-                    Autorização para importação, distribuição, armazenamento de medicamentos, cosméticos, correlatos e alimentos.
-                  </p>
-                </div>
-                <!-- ITEM 2 -->
-                <div class="dif-license-item">
-                  <h4 class="dif-license-title">ANVISA</h4>
-                  <p class="dif-license-desc">
-                    Autorização para importação, distribuição, armazenamento de medicamentos, cosméticos, correlatos e alimentos.
-                  </p>
-                </div>
-                <!-- ITEM 3 -->
-                <div class="dif-license-item">
-                  <h4 class="dif-license-title">ANVISA</h4>
-                  <p class="dif-license-desc">
-                    Autorização para importação, distribuição, armazenamento de medicamentos, cosméticos, correlatos e alimentos.
-                  </p>
-                </div>
-                <!-- ITEM 4 -->
-                <div class="dif-license-item">
-                  <h4 class="dif-license-title">ANVISA</h4>
-                  <p class="dif-license-desc">
-                    Autorização para importação, distribuição, armazenamento de medicamentos, cosméticos, correlatos e alimentos.
-                  </p>
-                </div>
-                <!-- ITEM 5 -->
-                <div class="dif-license-item">
-                  <h4 class="dif-license-title">ANVISA</h4>
-                  <p class="dif-license-desc">
-                    Autorização para importação, distribuição, armazenamento de medicamentos, cosméticos, correlatos e alimentos.
-                  </p>
-                </div>
-                <!-- ITEM 6 -->
-                <div class="dif-license-item">
-                  <h4 class="dif-license-title">ANVISA</h4>
-                  <p class="dif-license-desc">
-                    Autorização para importação, distribuição, armazenamento de medicamentos, cosméticos, correlatos e alimentos.
-                  </p>
-                </div>
+                ${licenses.map(lic => `
+                  <div class="dif-license-item">
+                    <h4 class="dif-license-title">${lic.title || 'ANVISA'}</h4>
+                    <p class="dif-license-desc">
+                      ${lic.desc || ''}
+                    </p>
+                  </div>
+                `).join('')}
               </div>
             </div>
 
@@ -108,70 +116,21 @@ export async function renderDiferenciaisPage() {
             <!-- TEXTOS E GRADE DE RECURSOS TECNOLÓGICOS (ESQUERDA - 2 COLUNAS) -->
             <div>
               <h2 class="dif-heading-teal">
-                Tecnologia e Investimento
+                ${techTitle}
               </h2>
 
               <div class="dif-features-grid">
-                <!-- FEATURE 1 -->
-                <div class="dif-feature-item">
-                  <div class="dif-feature-icon">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2CA4B0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 24px; height: 24px; max-width: 24px; max-height: 24px; display: block;"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                ${features.map(feat => `
+                  <div class="dif-feature-item">
+                    <div class="dif-feature-icon">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2CA4B0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 24px; height: 24px; max-width: 24px; max-height: 24px; display: block;"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                    </div>
+                    <h4 class="dif-feature-title">${feat.title || ''}</h4>
+                    <p class="dif-feature-desc">
+                      ${feat.desc || ''}
+                    </p>
                   </div>
-                  <h4 class="dif-feature-title">Nossa Estrutura</h4>
-                  <p class="dif-feature-desc">
-                    Nossas estruturas contam com laboratórios físico químicos e microbiológicos - RDC 10/2011
-                  </p>
-                </div>
-                <!-- FEATURE 2 -->
-                <div class="dif-feature-item">
-                  <div class="dif-feature-icon">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2CA4B0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 24px; height: 24px; max-width: 24px; max-height: 24px; display: block;"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
-                  </div>
-                  <h4 class="dif-feature-title">Monitoramento da Carga</h4>
-                  <p class="dif-feature-desc">
-                    Nossas estruturas contam com laboratórios físico químicos e microbiológicos - RDC 10/2011
-                  </p>
-                </div>
-                <!-- FEATURE 3 -->
-                <div class="dif-feature-item">
-                  <div class="dif-feature-icon">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2CA4B0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 24px; height: 24px; max-width: 24px; max-height: 24px; display: block;"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
-                  </div>
-                  <h4 class="dif-feature-title">Software de Monitoramento de Temperatura</h4>
-                  <p class="dif-feature-desc">
-                    Nossas estruturas contam com laboratórios físico químicos e microbiológicos - RDC 10/2011
-                  </p>
-                </div>
-                <!-- FEATURE 4 -->
-                <div class="dif-feature-item">
-                  <div class="dif-feature-icon">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2CA4B0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 24px; height: 24px; max-width: 24px; max-height: 24px; display: block;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-                  </div>
-                  <h4 class="dif-feature-title">Sistema de dados</h4>
-                  <p class="dif-feature-desc">
-                    Nossas estruturas contam com laboratórios físico químicos e microbiológicos - RDC 10/2011
-                  </p>
-                </div>
-                <!-- FEATURE 5 -->
-                <div class="dif-feature-item">
-                  <div class="dif-feature-icon">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2CA4B0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 24px; height: 24px; max-width: 24px; max-height: 24px; display: block;"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
-                  </div>
-                  <h4 class="dif-feature-title">Veículo Próprio para Transporte</h4>
-                  <p class="dif-feature-desc">
-                    Nossas estruturas contam com laboratórios físico químicos e microbiológicos - RDC 10/2011
-                  </p>
-                </div>
-                <!-- FEATURE 6 -->
-                <div class="dif-feature-item">
-                  <div class="dif-feature-icon">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2CA4B0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 24px; height: 24px; max-width: 24px; max-height: 24px; display: block;"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                  </div>
-                  <h4 class="dif-feature-title">Acompanhamento do Tratamento do Paciente</h4>
-                  <p class="dif-feature-desc">
-                    Nossas estruturas contam com laboratórios físico químicos e microbiológicos - RDC 10/2011
-                  </p>
-                </div>
+                `).join('')}
               </div>
             </div>
 
@@ -197,9 +156,9 @@ export async function renderDiferenciaisPage() {
               <div class="dif-value-icon-box">
                 <img src="/asserts/feather_award.png" alt="Nossa Missão" onerror="this.src='/asserts/feather_globe.png';">
               </div>
-              <h3 class="dif-value-title">Nossa Missão</h3>
+              <h3 class="dif-value-title">${values[0]?.title || 'Nossa Missão'}</h3>
               <p class="dif-value-desc">
-                Proporcionar ao paciente a segurança, confiabilidade com honestidade durante a aquisição de medicamentos qualificados visando o melhor tratamento.
+                ${values[0]?.desc || 'Proporcionar ao paciente a segurança, confiabilidade com honestidade durante a aquisição de medicamentos qualificados visando o melhor tratamento.'}
               </p>
             </div>
 
@@ -208,9 +167,9 @@ export async function renderDiferenciaisPage() {
               <div class="dif-value-icon-box">
                 <img src="/asserts/feather_eye.png" alt="Nossa Visão" onerror="this.src='/asserts/feather_globe.png';">
               </div>
-              <h3 class="dif-value-title">Nossa Visão</h3>
+              <h3 class="dif-value-title">${values[1]?.title || 'Nossa Visão'}</h3>
               <p class="dif-value-desc">
-                Ser uma empresa de referência internacional com excelência na assessoria de importação de medicamentos.
+                ${values[1]?.desc || 'Ser uma empresa de referência internacional com excelência na assessoria de importação de medicamentos.'}
               </p>
             </div>
 
@@ -219,9 +178,9 @@ export async function renderDiferenciaisPage() {
               <div class="dif-value-icon-box">
                 <img src="/asserts/feather_globe.png" alt="Nossos Valores" onerror="this.src='/asserts/feather_eye.png';">
               </div>
-              <h3 class="dif-value-title">Nossos Valores</h3>
+              <h3 class="dif-value-title">${values[2]?.title || 'Nossos Valores'}</h3>
               <p class="dif-value-desc">
-                Honestidade, Respeito, Excelência, Integridade e Compromisso social.
+                ${values[2]?.desc || 'Honestidade, Respeito, Excelência, Integridade e Compromisso social.'}
               </p>
             </div>
 
@@ -229,12 +188,13 @@ export async function renderDiferenciaisPage() {
         </div>
       </section>
 
-      <!-- BANNER DE LARGURA TOTAL: FAÇA JÁ SEU PEDIDO -->
-      <section style="position: relative; background: url('/asserts/Rectangle2.png') center/cover no-repeat; padding: 5.5rem 1rem; text-align: center; color: #FFFFFF;">
-        <div style="position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(0, 0, 0, 0.42); z-index: 1;"></div>
-        <div class="container" style="position: relative; z-index: 2; max-width: 650px;">
-          <h2 style="font-size: 2.35rem; font-weight: 800; color: #FFFFFF; margin-bottom: 1.75rem; letter-spacing: -0.01em;">Faça já seu pedido</h2>
-          <a href="/contato" class="btn" style="background-color: #2CA4B0; color: #FFFFFF; font-weight: 700; font-size: 0.95rem; padding: 0.85rem 2.25rem; border-radius: 6px; box-shadow: 0 4px 14px rgba(44, 164, 176, 0.4); text-decoration: none; display: inline-block;" data-route="contato">
+      <!-- BANNER PANORÂMICO "FAÇA JÁ SEU PEDIDO" (SOBREPOSTO PELO CARD DE VALORES) -->
+      <section class="dif-banner-section">
+        <div class="container" style="max-width: 800px; position: relative; z-index: 2;">
+          <h2 style="font-size: 2.35rem; font-weight: 800; color: #FFFFFF; margin-bottom: 1.5rem; letter-spacing: -0.01em;">
+            Faça já seu pedido
+          </h2>
+          <a href="/contato" class="btn" style="background-color: #2CA4B0; color: #FFFFFF; font-weight: 700; font-size: 0.95rem; padding: 0.85rem 2.25rem; border-radius: 6px; box-shadow: 0 4px 14px rgba(44, 164, 176, 0.35); text-decoration: none; display: inline-block;" data-route="contato">
             Fale com nossos especialistas
           </a>
         </div>

@@ -42,8 +42,8 @@ export async function renderBlogPage(slug = null) {
             ${post.title}
           </h1>
 
-          <!-- CORPO DE TEXTO DO ARTIGO (LOREM IPSUM FORMATADO CONFORME FOTO) -->
-          <div class="blog-article-content" style="color: #64748B; font-size: 0.92rem; line-height: 1.85; margin-bottom: 5rem; text-align: justify;">
+          <!-- CORPO DE TEXTO DO ARTIGO -->
+          <div class="blog-article-content" style="color: #475569; font-size: 0.95rem; line-height: 1.85; margin-bottom: 4rem; text-align: left;">
             ${post.content ? post.content : `
               <p style="margin-bottom: 1.6rem;">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ultricies felis nec urna feugiat faucibus. Sed tortor enim, dignissim ac massa quis, scelerisque feugiat ligula. Phasellus ac elit vitae felis tincidunt porta. Nunc blandit pulvinar dui, vel condimentum orci rutrum non. Fusce ac augue at ipsum volutpat auctor a vel tortor. Proin condimentum risus vitae felis molestie imperdiet. In pellentesque faucibus ante id ornare. Quisque molestie nunc bibendum, finibus urna eget, malesuada ante. Integer bibendum, nunc in consequat molestie, orci tortor commodo est, sit amet iaculis mauris neque non tortor. Cras sodales auctor ex, in vulputate nunc. Suspendisse eget turpis sed tortor mollis sollicitudin. Morbi dignissim mauris et magna tincidunt suscipit. Mauris auctor id odio sit amet congue.
@@ -65,10 +65,9 @@ export async function renderBlogPage(slug = null) {
         </div>
 
         <!-- BANNER DE LARGURA TOTAL: FAÇA JÁ SEU PEDIDO -->
-        <section style="position: relative; background: url('/asserts/Rectangle2.png') center/cover no-repeat; padding: 5.5rem 1rem; text-align: center; color: #FFFFFF;">
-          <div style="position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(0, 0, 0, 0.42); z-index: 1;"></div>
+        <section class="med-panoramic-banner">
           <div class="container" style="position: relative; z-index: 2; max-width: 650px;">
-            <h2 style="font-size: 2.35rem; font-weight: 800; color: #FFFFFF; margin-bottom: 1.75rem; letter-spacing: -0.01em;">Faça já seu pedido</h2>
+            <h2 style="font-size: 2.35rem; font-weight: 800; color: #FFFFFF; margin-bottom: 1.5rem; letter-spacing: -0.01em;">Faça já seu pedido</h2>
             <a href="/contato" class="btn" style="background-color: #2CA4B0; color: #FFFFFF; font-weight: 700; font-size: 0.95rem; padding: 0.85rem 2.25rem; border-radius: 6px; box-shadow: 0 4px 14px rgba(44, 164, 176, 0.4); text-decoration: none; display: inline-block;" data-route="contato">
               Fale com nossos especialistas
             </a>
@@ -101,78 +100,88 @@ export async function renderBlogPage(slug = null) {
   }
 
   // =========================================================================
-  // CENÁRIO 2: LISTAGEM DE POSTS DO BLOG (/blog)
+  // CENÁRIO 2: LISTAGEM DE POSTS DO BLOG (/blog - 6 CARDS 3x2 CONFORME DESIGN)
   // =========================================================================
   app.innerHTML = `<div style="padding: 100px 0; text-align: center;"><div class="badge">Carregando blog...</div></div>`;
 
-  const data = await api.getBlogPosts({ limit: 12 });
+  const [pageData, data] = await Promise.all([
+    api.getPage('blog'),
+    api.getBlogPosts({ limit: 12 })
+  ]);
+  const sec = pageData?.sections || {};
+  const heroSec = sec.hero || {};
   const posts = data.posts || [];
 
-  // Exibir exatamente 3 posts redimensionados
+  // Garantir exatamente 6 posts no grid 3x2 conforme o design de referência
   const displayPosts = [...posts];
   const defaultFiller = {
     title: 'Título do blog',
     slug: 'titulo-do-blog',
     summary: 'lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostru',
-    cover_image: '/asserts/blog-card-cover.jpg'
+    cover_image: '/asserts/blog-laptop.jpg'
   };
 
-  while (displayPosts.length < 3) {
+  while (displayPosts.length < 6) {
     const idx = displayPosts.length + 1;
     displayPosts.push({
       ...defaultFiller,
       id: idx,
-      slug: displayPosts.length === 0 ? 'como-beneficio-medicamentos-reduz-absenteismo' : `post-exemplo-${idx}`
+      slug: displayPosts.length === 0 ? 'como-beneficio-medicamentos-reduz-absenteismo' : `post-exemplo-${idx}`,
+      cover_image: '/asserts/blog-laptop.jpg'
     });
   }
+
+  // Ajustar imagens para blog-laptop.jpg caso venham com o placeholder antigo
+  const finalPosts = displayPosts.slice(0, 6).map(p => ({
+    ...p,
+    cover_image: (p.cover_image && !p.cover_image.includes('blog-card-cover.jpg')) ? p.cover_image : '/asserts/blog-laptop.jpg'
+  }));
+
+  const heroStyle = heroSec.image_url ? `style="background-image: url('${heroSec.image_url}'); background-size: cover; background-position: center;"` : '';
 
   app.innerHTML = `
     <div style="background: #FFFFFF;">
       <!-- HERO BANNER DO BLOG (FOTO COM TÍTULO 'Blog' NO CENTRO) -->
-      <section class="page-hero-header">
+      <section class="page-hero-header" ${heroStyle}>
         <div class="page-hero-header-overlay"></div>
         <div class="page-hero-header-content">
           <h1 class="page-hero-header-title">
-            Blog
+            ${heroSec.title || 'Blog'}
           </h1>
+          ${heroSec.subtitle ? `<p style="color: rgba(255,255,255,0.9); font-size: 1.05rem; margin-top: 0.5rem; max-width: 600px; margin-left: auto; margin-right: auto;">${heroSec.subtitle}</p>` : ''}
         </div>
       </section>
 
-      <!-- SEÇÃO ÚLTIMAS POSTAGENS (3 CARDS REDIMENSIONADOS) -->
-      <section style="padding: 5rem 1rem 4rem 1rem;">
-        <div class="container" style="max-width: 1140px;">
-          <div style="text-align: center; margin-bottom: 3.5rem;">
-            <h2 style="font-size: 1.95rem; font-weight: 800; color: #153258; letter-spacing: -0.01em;">
-              Últimas postagens
-            </h2>
-          </div>
-
-          <!-- GRID DE 3 POSTS REDIMENSIONADOS -->
-          <div class="blog-cards-grid" style="margin-bottom: 0;">
-            ${displayPosts.slice(0, 3).map(p => `
-              <div class="blog-card-item">
-                <div>
-                  <a href="/blog/${p.slug}" data-route="blog-post" data-slug="${p.slug}" class="blog-card-img-wrap">
-                    <img src="${p.cover_image || '/asserts/blog-card-cover.jpg'}" alt="${p.title}" class="blog-card-img" onerror="this.src='/asserts/blog-card-cover.jpg';">
+      <!-- SEÇÃO GRID DE BLOG (6 CARDS COM FOTO LAPTOP CONFORME DESIGN) -->
+      <section class="home-blog-section" style="padding-top: 5rem; padding-bottom: 5.5rem;">
+        <div class="home-blog-container">
+          
+          <!-- GRID DE 6 POSTS (3 COLUNAS x 2 LINHAS) -->
+          <div class="home-blog-grid" style="margin-bottom: 0;">
+            ${finalPosts.map(p => `
+              <div class="home-blog-card">
+                <a href="/blog/${p.slug}" data-route="blog-post" data-slug="${p.slug}" class="home-blog-card-img-wrap">
+                  <img src="${p.cover_image}" alt="${p.title}" class="home-blog-card-img" onerror="this.src='/asserts/blog-laptop.jpg';">
+                </a>
+                <h3 class="home-blog-card-heading">
+                  <a href="/blog/${p.slug}" data-route="blog-post" data-slug="${p.slug}">
+                    ${p.title}
                   </a>
-                  <h3 class="blog-card-title">
-                    <a href="/blog/${p.slug}" data-route="blog-post" data-slug="${p.slug}">${p.title}</a>
-                  </h3>
-                  <p class="blog-card-summary">
-                    ${p.summary || 'lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostru'}
-                  </p>
-                </div>
+                </h3>
+                <p class="home-blog-card-text">
+                  ${p.summary || defaultFiller.summary}
+                </p>
               </div>
             `).join('')}
           </div>
+
         </div>
       </section>
 
       <!-- BANNER DE LARGURA TOTAL: FAÇA JÁ SEU PEDIDO -->
-      <section style="position: relative; background: url('/asserts/Rectangle2.png') center/cover no-repeat; padding: 5.5rem 1rem; text-align: center; color: #FFFFFF;">
-        <div style="position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(0, 0, 0, 0.42); z-index: 1;"></div>
+      <section class="med-panoramic-banner">
         <div class="container" style="position: relative; z-index: 2; max-width: 650px;">
-          <h2 style="font-size: 2.35rem; font-weight: 800; color: #FFFFFF; margin-bottom: 1.75rem; letter-spacing: -0.01em;">Faça já seu pedido</h2>
+          <h2 style="font-size: 2.35rem; font-weight: 800; color: #FFFFFF; margin-bottom: 1.5rem; letter-spacing: -0.01em;">Faça já seu pedido</h2>
           <a href="/contato" class="btn" style="background-color: #2CA4B0; color: #FFFFFF; font-weight: 700; font-size: 0.95rem; padding: 0.85rem 2.25rem; border-radius: 6px; box-shadow: 0 4px 14px rgba(44, 164, 176, 0.4); text-decoration: none; display: inline-block;" data-route="contato">
             Fale com nossos especialistas
           </a>

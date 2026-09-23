@@ -43,6 +43,18 @@ export const api = {
     }
   },
 
+  // Medicamento Individual
+  async getMedicine(idOrName) {
+    try {
+      const res = await fetch(`${API_BASE}/medicines/${encodeURIComponent(idOrName)}`);
+      if (!res.ok) throw new Error('Medicamento não encontrado.');
+      return await res.json();
+    } catch (err) {
+      console.error(`API Error (getMedicine ${idOrName}):`, err);
+      return null;
+    }
+  },
+
   // Posts do Blog
   async getBlogPosts(params = {}) {
     try {

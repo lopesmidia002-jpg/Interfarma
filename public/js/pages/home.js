@@ -16,7 +16,32 @@ export async function renderHomePage() {
   const heroSubtitle = sec.hero?.subtitle || 'A InterFarma conta com assessoria personalizada para importação e transporte de medicamentos especiais e de alto custo para você, hospitais, clínicas e profissionais de saúde.';
   const heroImg = sec.hero?.image_url || '/asserts/Group-589448.png';
   const aboutImg = sec.about_summary?.image_url || '/asserts/equipe-reuniao.jpg';
-  const ctaImg = sec.cta_banner?.image_url || '/asserts/equipe-panoramica.png';
+
+  let blogPosts = [];
+  try {
+    const blogData = await api.getBlogPosts({ limit: 6 });
+    blogPosts = blogData?.posts || [];
+  } catch (e) {
+    blogPosts = [];
+  }
+
+  const defaultBlogItem = {
+    title: 'Título do blog',
+    slug: 'titulo-do-blog',
+    summary: 'orem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostru',
+    cover_image: '/asserts/blog-laptop.jpg'
+  };
+
+  const displayBlogPosts = [...blogPosts];
+  while (displayBlogPosts.length < 6) {
+    const idx = displayBlogPosts.length + 1;
+    displayBlogPosts.push({
+      ...defaultBlogItem,
+      id: idx,
+      slug: displayBlogPosts.length === 0 ? 'como-beneficio-medicamentos-reduz-absenteismo' : `post-exemplo-${idx}`,
+      cover_image: '/asserts/blog-laptop.jpg'
+    });
+  }
 
   app.innerHTML = `
     <div style="background: #FFFFFF; font-family: var(--font-main); overflow-x: hidden;">
@@ -136,67 +161,48 @@ export async function renderHomePage() {
 
               <!-- Foto da equipe com altura proporcional ao conteúdo e 100% visível no mobile -->
               <div style="position: relative; z-index: 2; width: 100%; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.06);">
-                <img class="about-team-photo" src="${aboutImg}" alt="Equipe InterFarma" onerror="this.src='/asserts/equipe-reuniao.jpg';">
+                <img class="about-team-photo" src="${sec.about_summary?.image_url || '/asserts/equipe-reuniao.jpg'}" alt="Equipe InterFarma" onerror="this.src='/asserts/equipe-reuniao.jpg';">
               </div>
 
             </div>
 
             <!-- TEXTO E 4 DESTAQUES CONFORME A REFERÊNCIA -->
             <div>
-              <span style="color: #2CA4B0; font-weight: 700; font-size: 0.95rem;">A InterFarma</span>
+              <span style="color: #2CA4B0; font-weight: 700; font-size: 0.95rem;">${sec.about_summary?.badge_text || 'A InterFarma'}</span>
               <h2 style="font-size: 2.25rem; font-weight: 800; color: #153258; margin: 0.35rem 0 1rem 0; letter-spacing: -0.01em;">
-                Um pouco sobre nós.
+                ${sec.about_summary?.title || 'Um pouco sobre nós.'}
               </h2>
               <p style="font-size: 0.95rem; color: #718096; line-height: 1.65; margin-bottom: 2rem; max-width: 520px;">
-                A InterFarma trabalha para auxiliar todos os brasileiros na importação de medicamentos, sem tributação alfandegária*.
+                ${sec.about_summary?.subtitle || 'A InterFarma trabalha para auxiliar todos os brasileiros na importação de medicamentos, sem tributação alfandegária*.'}
               </p>
 
               <div style="display: flex; flex-direction: column; gap: 1.15rem;">
-                
-                <!-- ITEM 1: ESTAMOS NO MUNDO TODO -->
-                <div style="display: flex; align-items: center; gap: 1.15rem; background: #FFFFFF; border: 1px solid #EBF1F6; border-radius: 14px; padding: 1rem 1.35rem; box-shadow: 0 4px 14px rgba(0,0,0,0.02); transition: transform 0.2s ease;">
-                  <div style="width: 42px; height: 42px; border-radius: 50%; background: #CCFBF1; color: #0D9488; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-                    <img src="/asserts/Group5576.png" alt="Estamos no mundo todo" style="width: 24px; height: 24px; object-fit: contain;" onerror="this.outerHTML='🌐'">
-                  </div>
-                  <div>
-                    <h4 style="font-size: 0.95rem; font-weight: 800; color: #153258; margin-bottom: 3px;">Estamos no mundo todo</h4>
-                    <p style="font-size: 0.78rem; color: #94A3B8; margin: 0; line-height: 1.4;">Contamos com uma rede global de fornecedores, estrategicamente localizados.</p>
-                  </div>
-                </div>
+                ${(() => {
+                  const defaultItems = [
+                    { icon: '/asserts/Group5576.png', bg: '#CCFBF1', color: '#0D9488', title: 'Estamos no mundo todo', text: 'Contamos com uma rede global de fornecedores, estrategicamente localizados.' },
+                    { icon: '/asserts/Group5577.png', bg: '#E0E7FF', color: '#4338CA', title: 'Cuidamos de tudo', text: 'Nossa equipe gerencia todos os processos, cuidando de toda burocracia, até o medicamento chegar em suas mãos.' },
+                    { icon: '/asserts/Group5578.png', bg: '#FCE7F3', color: '#BE185D', title: 'Compromisso com prazos', text: 'Somos comprometidos com os prazos e sabemos da importância de cumpri-los.' },
+                    { icon: '/asserts/feather_award.png', bg: '#E0F2FE', color: '#0284C7', title: 'Certificação e infraestrutura', text: 'Somos comprometidos com os prazos e sabemos da importância de cumpri-los.' }
+                  ];
+                  const items = (sec.about_summary?.extra_data?.items && sec.about_summary.extra_data.items.length > 0)
+                    ? sec.about_summary.extra_data.items
+                    : defaultItems;
 
-                <!-- ITEM 2: CUIDAMOS DE TUDO -->
-                <div style="display: flex; align-items: center; gap: 1.15rem; background: #FFFFFF; border: 1px solid #EBF1F6; border-radius: 14px; padding: 1rem 1.35rem; box-shadow: 0 4px 14px rgba(0,0,0,0.02); transition: transform 0.2s ease;">
-                  <div style="width: 42px; height: 42px; border-radius: 50%; background: #E0E7FF; color: #4338CA; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-                    <img src="/asserts/Group5577.png" alt="Cuidamos de tudo" style="width: 24px; height: 24px; object-fit: contain;" onerror="this.outerHTML='🛡️'">
-                  </div>
-                  <div>
-                    <h4 style="font-size: 0.95rem; font-weight: 800; color: #153258; margin-bottom: 3px;">Cuidamos de tudo</h4>
-                    <p style="font-size: 0.78rem; color: #94A3B8; margin: 0; line-height: 1.4;">Nossa equipe gerencia todos os processos, cuidando de toda burocracia, até o medicamento chegar em suas mãos.</p>
-                  </div>
-                </div>
-
-                <!-- ITEM 3: COMPROMISSO COM PRAZOS -->
-                <div style="display: flex; align-items: center; gap: 1.15rem; background: #FFFFFF; border: 1px solid #EBF1F6; border-radius: 14px; padding: 1rem 1.35rem; box-shadow: 0 4px 14px rgba(0,0,0,0.02); transition: transform 0.2s ease;">
-                  <div style="width: 42px; height: 42px; border-radius: 50%; background: #FCE7F3; color: #BE185D; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-                    <img src="/asserts/Group5578.png" alt="Compromisso com prazos" style="width: 24px; height: 24px; object-fit: contain;" onerror="this.outerHTML='⏰'">
-                  </div>
-                  <div>
-                    <h4 style="font-size: 0.95rem; font-weight: 800; color: #153258; margin-bottom: 3px;">Compromisso com prazos</h4>
-                    <p style="font-size: 0.78rem; color: #94A3B8; margin: 0; line-height: 1.4;">Somos comprometidos com os prazos e sabemos da importância de cumpri-los.</p>
-                  </div>
-                </div>
-
-                <!-- ITEM 4: CERTIFICAÇÃO E INFRAESTRUTURA -->
-                <div style="display: flex; align-items: center; gap: 1.15rem; background: #FFFFFF; border: 1px solid #EBF1F6; border-radius: 14px; padding: 1rem 1.35rem; box-shadow: 0 4px 14px rgba(0,0,0,0.02); transition: transform 0.2s ease;">
-                  <div style="width: 42px; height: 42px; border-radius: 50%; background: #E0F2FE; color: #0284C7; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-                    <img src="/asserts/feather_award.png" alt="Certificação e infraestrutura" style="width: 22px; height: 22px; object-fit: contain;" onerror="this.outerHTML='🏅'">
-                  </div>
-                  <div>
-                    <h4 style="font-size: 0.95rem; font-weight: 800; color: #153258; margin-bottom: 3px;">Certificação e infraestrutura</h4>
-                    <p style="font-size: 0.78rem; color: #94A3B8; margin: 0; line-height: 1.4;">Somos comprometidos com os prazos e sabemos da importância de cumpri-los.</p>
-                  </div>
-                </div>
-
+                  return items.map((item, idx) => {
+                    const def = defaultItems[idx % defaultItems.length];
+                    return `
+                      <div style="display: flex; align-items: center; gap: 1.15rem; background: #FFFFFF; border: 1px solid #EBF1F6; border-radius: 14px; padding: 1rem 1.35rem; box-shadow: 0 4px 14px rgba(0,0,0,0.02); transition: transform 0.2s ease;">
+                        <div style="width: 42px; height: 42px; border-radius: 50%; background: ${def.bg}; color: ${def.color}; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                          <img src="${item.icon || def.icon}" alt="${item.title || def.title}" style="width: 24px; height: 24px; object-fit: contain;" onerror="this.outerHTML='⭐'">
+                        </div>
+                        <div>
+                          <h4 style="font-size: 0.95rem; font-weight: 800; color: #153258; margin-bottom: 3px;">${item.title || def.title}</h4>
+                          <p style="font-size: 0.78rem; color: #94A3B8; margin: 0; line-height: 1.4;">${item.text || def.text}</p>
+                        </div>
+                      </div>
+                    `;
+                  }).join('');
+                })()}
               </div>
             </div>
 
@@ -242,7 +248,7 @@ export async function renderHomePage() {
             <!-- PASSO 2 -->
             <div class="flow-step-card" style="flex: 1; min-width: 250px; background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 16px; padding: 2.25rem 1.25rem 1.75rem 1.25rem; text-align: center; position: relative; box-shadow: 0 6px 20px rgba(0,0,0,0.03);">
               <div style="position: absolute; top: -20px; left: 50%; transform: translateX(-50%); width: 44px; height: 44px; border-radius: 50%; background: #4FD1C5; color: #FFFFFF; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(79, 209, 197, 0.4);">
-                <img src="/asserts/Group5805.png" alt="Fornecedores" style="width: 22px; height: 22px; object-fit: contain;" onerror="this.outerHTML='<svg width=\\'20\\' height=\\'20\\' viewBox=\\'0 0 24 24\\' fill=\\'currentColor\\'><path d=\\'M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.1.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z\\'/></svg>'">
+                <img src="/asserts/Group5805.png" alt="Fornecedores" style="width: 22px; height: 22px; object-fit: contain;" onerror="this.outerHTML='<svg width=\\'20\\' height=\\'20\\' viewBox=\\'0 0 24 24\\' fill=\\'currentColor\\'><path d=\\'M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.1.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.1-.89-2-2-2zm-6 0h-4V4h4v2z\\'/></svg>'">
               </div>
               <h3 style="font-size: 1.05rem; font-weight: 800; color: #153258; margin-top: 0.5rem; margin-bottom: 0.75rem;">Fornecedores</h3>
               <p style="font-size: 0.8rem; color: #718096; line-height: 1.55; margin: 0;">
@@ -325,23 +331,80 @@ export async function renderHomePage() {
       </section>
 
       <!-- ==========================================
-           5. BANNER PANORÂMICO "FAÇA JÁ SEU PEDIDO"
+           5. CARD "FAÇA JÁ SEU PEDIDO"
            ========================================== -->
-      <section style="position: relative; background: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)), url('${ctaImg}') center center / cover no-repeat; padding: 5.5rem 1.5rem; text-align: center; color: #FFFFFF; margin-bottom: 2rem;">
-        <div class="container" style="max-width: 800px; position: relative; z-index: 2;">
-          <h2 style="font-size: 2.5rem; font-weight: 800; color: #FFFFFF; margin-bottom: 1.5rem; letter-spacing: -0.01em; text-shadow: 0 2px 8px rgba(0,0,0,0.3);">
-            Faça já seu pedido
-          </h2>
-          <div>
-            <a href="/contato" class="btn" style="background-color: #2CA4B0; color: #FFFFFF; font-weight: 700; font-size: 0.95rem; padding: 0.85rem 2.25rem; border-radius: 6px; box-shadow: 0 4px 14px rgba(0,0,0,0.25); text-decoration: none; display: inline-block; transition: all 0.2s ease;" data-route="contato">
-              Fale com nossos especialistas
-            </a>
+      <section class="cf-cta-section">
+        <div class="container">
+          <div class="cf-cta-wrapper">
+            <div class="cf-cta-card">
+              
+              <!-- FOTO DA EQUIPE À ESQUERDA -->
+              <div class="cf-cta-image-wrapper">
+                <img src="/asserts/equipe-sorrindo.jpg" alt="Equipe InterFarma" onerror="this.src='/asserts/Rectangle Copy 4.jpg';">
+              </div>
+
+              <!-- CONTEÚDO À DIREITA (TÍTULO + BOTÃO) -->
+              <div class="cf-cta-content">
+                <h2 class="cf-cta-title">
+                  Faça já seu pedido
+                </h2>
+                <div>
+                  <a href="/contato" class="cf-cta-btn" data-route="contato">
+                    Fale com nossos especialistas
+                  </a>
+                </div>
+              </div>
+
+            </div>
           </div>
         </div>
       </section>
 
       <!-- ==========================================
-           6. SEÇÃO LEAD: INFORME SEU E-MAIL
+           6. SEÇÃO NOVIDADES: CONFIRA NOSSO BLOG
+           ========================================== -->
+      <section class="home-blog-section">
+        <img src="/asserts/Vector84.png" alt="" class="home-blog-bg-curve">
+        
+        <div class="home-blog-container">
+          
+          <!-- CABEÇALHO DO BLOG (ALINHADO À ESQUERDA) -->
+          <div class="home-blog-header">
+            <span class="home-blog-tag">Novidades</span>
+            <h2 class="home-blog-title">
+              Confira nosso blog
+            </h2>
+          </div>
+
+          <!-- GRADE DE 6 POSTS (3x2) -->
+          <div class="home-blog-grid">
+            ${displayBlogPosts.slice(0, 6).map(p => `
+              <div class="home-blog-card">
+                <a href="/blog/${p.slug}" data-route="blog-post" data-slug="${p.slug}" class="home-blog-card-img-wrap">
+                  <img src="${p.cover_image || '/asserts/blog-laptop.jpg'}" alt="${p.title}" class="home-blog-card-img" onerror="this.src='/asserts/blog-laptop.jpg';">
+                </a>
+                <h3 class="home-blog-card-heading">
+                  <a href="/blog/${p.slug}" data-route="blog-post" data-slug="${p.slug}">${p.title}</a>
+                </h3>
+                <p class="home-blog-card-text">
+                  ${p.summary || 'orem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostru'}
+                </p>
+              </div>
+            `).join('')}
+          </div>
+
+          <!-- BOTÃO ACESSAR BLOG -->
+          <div class="home-blog-cta-wrap">
+            <a href="/blog" class="home-blog-cta-btn" data-route="blog">
+              Acessar blog
+            </a>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ==========================================
+           7. SEÇÃO LEAD: INFORME SEU E-MAIL
            ========================================== -->
       <section style="background: #F4F9FD; padding: 4.5rem 1rem 5rem 1rem; text-align: center;">
         <div class="container" style="max-width: 650px;">

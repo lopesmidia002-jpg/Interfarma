@@ -1068,71 +1068,78 @@ ul {
 
 .dif-grid-layout {
   display: grid;
-  grid-template-columns: 340px 1fr;
+  grid-template-columns: 410px 1fr;
   gap: 4.5rem;
   align-items: center;
 }
 
 .dif-grid-layout.reverse {
-  grid-template-columns: 1fr 340px;
+  grid-template-columns: 1fr 410px;
 }
 
 /* FOTOS COM ADORNOS (BLOBS E BACKDROPS) */
 .dif-photo-container {
   position: relative;
   width: 100%;
-  max-width: 340px;
+  max-width: 410px;
   margin: 0 auto;
 }
 
 .dif-photo-backdrop-blue {
   position: absolute;
-  top: 15px;
-  left: 15px;
-  width: 100%;
-  height: 100%;
+  top: -15px;
+  left: -15px;
+  width: 88%;
+  height: 94%;
   background: #EAF5FB;
-  border-radius: 24px;
+  border-radius: 20px;
   z-index: 1;
 }
 
 .dif-blob-tl {
   position: absolute;
-  top: -16px;
+  top: -14px;
   left: -14px;
-  width: 70px;
-  height: 70px;
+  width: 62px;
+  height: 62px;
   background: #FCD34D;
-  border-radius: 42% 58% 70% 30% / 45% 45% 55% 55%;
-  z-index: 2;
-  opacity: 0.9;
+  border-radius: 40% 60% 70% 30% / 40% 50% 60% 70%;
+  z-index: 4;
+  box-shadow: 0 4px 12px rgba(252, 211, 77, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .dif-blob-tr {
   position: absolute;
-  top: -16px;
+  top: -14px;
   right: -14px;
-  width: 70px;
-  height: 70px;
+  width: 62px;
+  height: 62px;
   background: #FCD34D;
   border-radius: 55% 45% 30% 70% / 60% 40% 60% 40%;
-  z-index: 2;
-  opacity: 0.9;
+  z-index: 4;
+  box-shadow: 0 4px 12px rgba(252, 211, 77, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .dif-photo-frame {
   position: relative;
-  z-index: 3;
-  border-radius: 20px;
+  z-index: 2;
+  border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.07);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
   background: #F8FAFC;
   width: 100%;
 }
 
 .dif-photo-frame img {
   width: 100%;
-  height: 420px;
+  height: auto;
+  max-height: 330px;
   object-fit: cover;
   display: block;
 }
@@ -1234,22 +1241,40 @@ ul {
   margin: 0;
 }
 
-/* CARD MISSÃO, VISÃO E VALORES */
+/* CARD MISSÃO, VISÃO E VALORES (SOBREPONDO A FOTO PANORÂMICA) */
 .dif-values-container {
-  padding: 0 1.5rem 5rem 1.5rem;
-  background: #FFFFFF;
+  padding: 0 1.5rem;
+  background: transparent;
+  position: relative;
+  z-index: 10;
+  margin-bottom: -115px;
 }
 
 .dif-values-card {
   background: #FFFFFF;
   border: 1px solid #E2E8F0;
   border-radius: 20px;
-  padding: 3.5rem 3rem;
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.04);
+  padding: 2.75rem 2.5rem;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  gap: 2.5rem;
+  gap: 2.25rem;
   text-align: center;
+}
+
+/* BANNER PANORÂMICO DIFERENCIAIS (ENQUADRAMENTO DA FOTO COM CABEÇAS VISÍVEIS) */
+.dif-banner-section {
+  position: relative;
+  background: linear-gradient(rgba(0, 0, 0, 0.42), rgba(0, 0, 0, 0.42)), url('/asserts/equipe-panoramica.png') center top / cover no-repeat;
+  padding: 11.5rem 1.5rem 5.5rem 1.5rem;
+  min-height: 420px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: #FFFFFF;
+  z-index: 1;
 }
 
 .dif-value-col {
@@ -1312,10 +1337,19 @@ ul {
     gap: 1.5rem;
   }
 
+  .dif-values-container {
+    margin-bottom: -70px;
+  }
+
   .dif-values-card {
     grid-template-columns: 1fr;
     gap: 2.5rem;
     padding: 2.5rem 1.5rem;
+  }
+
+  .dif-banner-section {
+    padding-top: 8.5rem;
+    padding-bottom: 4.5rem;
   }
 }
 
@@ -1584,5 +1618,479 @@ ul {
     padding: 1.25rem;
   }
 }
+
+/* ==========================================================================
+   PÁGINA COMO FUNCIONA - CARD CTA "FAÇA JÁ SEU PEDIDO" (MODELO DE REFERÊNCIA)
+   ========================================================================== */
+.cf-cta-section {
+  padding: 4rem 1.5rem 4.5rem 1.5rem;
+  background: #FFFFFF;
+}
+
+.cf-cta-wrapper {
+  max-width: 960px;
+  margin: 0 auto;
+  position: relative;
+  padding: 1.5rem 0;
+}
+
+.cf-cta-card {
+  background: #EDF6FC;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  padding: 1rem 3rem 1rem 2rem;
+  gap: 2.5rem;
+  min-height: 190px;
+  position: relative;
+}
+
+.cf-cta-image-wrapper {
+  flex-shrink: 0;
+  width: 320px;
+  margin-top: -2.5rem;
+  margin-bottom: -2.5rem;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+  position: relative;
+  z-index: 2;
+}
+
+.cf-cta-image-wrapper img {
+  width: 100%;
+  height: 245px;
+  object-fit: cover;
+  display: block;
+}
+
+.cf-cta-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0.5rem 1rem;
+}
+
+.cf-cta-title {
+  font-size: 2.15rem;
+  font-weight: 800;
+  color: #153258;
+  margin-bottom: 1.35rem;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+
+.cf-cta-btn {
+  background-color: #2CA4B0;
+  color: #FFFFFF !important;
+  font-weight: 700;
+  font-size: 0.95rem;
+  padding: 0.85rem 2.25rem;
+  border-radius: 6px;
+  box-shadow: 0 4px 14px rgba(44, 164, 176, 0.35);
+  text-decoration: none;
+  display: inline-block;
+  transition: all 0.2s ease;
+}
+
+.cf-cta-btn:hover {
+  background-color: #238f9b;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(44, 164, 176, 0.45);
+}
+
+@media (max-width: 860px) {
+  .cf-cta-card {
+    flex-direction: column;
+    padding: 2.5rem 1.5rem 2rem 1.5rem;
+    gap: 1.75rem;
+    text-align: center;
+  }
+
+  .cf-cta-image-wrapper {
+    width: 100%;
+    max-width: 360px;
+    margin: -3.5rem auto 0 auto;
+  }
+
+  .cf-cta-image-wrapper img {
+    height: 220px;
+  }
+
+  .cf-cta-content {
+    padding: 0;
+  }
+
+  .cf-cta-title {
+    font-size: 1.85rem;
+    margin-bottom: 1.15rem;
+  }
+}
+
+/* ==========================================================================
+   HOME - SEÇÃO NOVIDADES / CONFIRA NOSSO BLOG (3x2 GRID CONFORME DESIGN)
+   ========================================================================== */
+.home-blog-section {
+  position: relative;
+  padding: 4.5rem 1.5rem 5rem 1.5rem;
+  background: #FFFFFF;
+  overflow: hidden;
+}
+
+.home-blog-bg-curve {
+  position: absolute;
+  right: 0;
+  top: 30%;
+  width: 100%;
+  max-width: 1400px;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.9;
+}
+
+.home-blog-container {
+  max-width: 1140px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+
+.home-blog-header {
+  margin-bottom: 2.75rem;
+  text-align: left;
+}
+
+.home-blog-tag {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #718096;
+  margin-bottom: 0.35rem;
+  display: block;
+}
+
+.home-blog-title {
+  font-size: 2.15rem;
+  font-weight: 800;
+  color: #153258;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+}
+
+.home-blog-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  margin-bottom: 3.5rem;
+}
+
+.home-blog-card {
+  background: #FFFFFF;
+  border-radius: 16px;
+  border: 1px solid #EBF1F6;
+  padding: 1.15rem 1.15rem 1.5rem 1.15rem;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.03);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.home-blog-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.07);
+}
+
+.home-blog-card-img-wrap {
+  width: 100%;
+  height: 185px;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 1.15rem;
+  display: block;
+  background: #F8FAFC;
+}
+
+.home-blog-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.35s ease;
+}
+
+.home-blog-card:hover .home-blog-card-img {
+  transform: scale(1.04);
+}
+
+.home-blog-card-heading {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #153258;
+  margin-bottom: 0.65rem;
+  line-height: 1.35;
+}
+
+.home-blog-card-heading a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.home-blog-card-heading a:hover {
+  color: #2CA4B0;
+}
+
+.home-blog-card-text {
+  font-size: 0.82rem;
+  color: #718096;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.home-blog-cta-wrap {
+  text-align: center;
+}
+
+.home-blog-cta-btn {
+  background-color: #2CA4B0;
+  color: #FFFFFF !important;
+  font-weight: 700;
+  font-size: 0.95rem;
+  padding: 0.85rem 2.75rem;
+  border-radius: 6px;
+  box-shadow: 0 4px 14px rgba(44, 164, 176, 0.35);
+  text-decoration: none;
+  display: inline-block;
+  transition: all 0.2s ease;
+}
+
+.home-blog-cta-btn:hover {
+  background-color: #238f9b;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(44, 164, 176, 0.45);
+}
+
+@media (max-width: 980px) {
+  .home-blog-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .home-blog-section {
+    padding-top: 2.5rem !important;
+    padding-bottom: 3.5rem !important;
+  }
+
+  .home-blog-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1.5rem !important;
+    padding: 0 0.5rem;
+  }
+  
+  .home-blog-card {
+    text-align: left !important;
+    padding: 1.15rem 1rem !important;
+  }
+
+  .home-blog-card-heading {
+    text-align: left !important;
+    font-size: 1.15rem !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  .home-blog-card-text {
+    text-align: left !important;
+    font-size: 0.88rem !important;
+    line-height: 1.6 !important;
+    color: #475569 !important;
+  }
+  
+  .home-blog-header {
+    text-align: left !important;
+  }
+  
+  .home-blog-title {
+    font-size: 1.65rem !important;
+    text-align: left !important;
+  }
+}
+
+/* ==========================================================================
+   PÁGINA EMPRESAS - CARD CONTATO SOBREPONDO A SEÇÃO AZUL
+   ========================================================================== */
+.empresas-contact-section {
+  padding: 1rem 1.5rem 0 1.5rem;
+  background: transparent;
+  position: relative;
+  z-index: 10;
+  margin-bottom: -110px;
+}
+
+.empresas-contact-card {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 20px;
+  padding: 3.5rem 3rem 2.75rem 3rem;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.05);
+  margin: 0 auto;
+  max-width: 860px;
+}
+
+.empresas-lead-section {
+  background: #F4F9FD;
+  padding: 11.5rem 1rem 5rem 1rem;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+.form-grid-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+  width: 100%;
+}
+
+.form-grid-row input,
+.form-field-full textarea {
+  width: 100%;
+  padding: 0.85rem 1.2rem;
+  font-size: 0.9rem;
+  border-radius: 8px;
+  border: 1px solid #E2E8F0;
+  background: #FFFFFF;
+  outline: none;
+  font-family: inherit;
+  color: #1E293B;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+  transition: border-color 0.2s, box-shadow 0.2s;
+  box-sizing: border-box;
+}
+
+.form-grid-row input:focus,
+.form-field-full textarea:focus {
+  border-color: #2CA4B0;
+  box-shadow: 0 0 0 3px rgba(44, 164, 176, 0.15);
+}
+
+.form-field-full textarea {
+  resize: vertical;
+  min-height: 110px;
+}
+
+.form-submit-container {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 0.5rem;
+}
+
+@media (max-width: 860px) {
+  .empresas-contact-section {
+    margin-bottom: -75px;
+    padding: 1rem 1rem 0 1rem;
+  }
+  
+  .empresas-contact-card {
+    padding: 2.25rem 1.25rem 1.75rem 1.25rem !important;
+    border-radius: 16px;
+  }
+  
+  .empresas-lead-section {
+    padding-top: 8.5rem;
+    padding-bottom: 4rem;
+  }
+  
+  .form-grid-row {
+    grid-template-columns: 1fr !important;
+    gap: 1rem !important;
+  }
+  
+  .form-submit-container {
+    justify-content: center !important;
+  }
+  
+  .form-submit-container button {
+    width: 100% !important;
+    max-width: 280px !important;
+  }
+}
+
+/* ==========================================================================
+   PÁGINA MEDICAMENTOS & DETALHES DO MEDICAMENTO
+   ========================================================================== */
+.med-item-card {
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  user-select: none;
+}
+
+.med-item-card:hover {
+  transform: translateY(-2px);
+  border-color: #2CA4B0 !important;
+  box-shadow: 0 6px 16px rgba(44, 164, 176, 0.12) !important;
+}
+
+@media (max-width: 768px) {
+  .med-details-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1.75rem !important;
+  }
+}
+
+.med-panoramic-banner {
+  position: relative;
+  background: linear-gradient(rgba(0, 0, 0, 0.42), rgba(0, 0, 0, 0.42)), url('/asserts/equipe-panoramica.png') center top / cover no-repeat;
+  min-height: 440px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: #FFFFFF;
+  padding: 7.5rem 1.5rem;
+}
+
+@media (max-width: 860px) {
+  .med-panoramic-banner {
+    min-height: 360px;
+    padding: 5rem 1.25rem;
+  }
+
+  /* RESPONSIVIDADE GLOBAL PARA TODAS AS PÁGINAS NO MODO MOBILE */
+  body, html {
+    max-width: 100vw !important;
+    overflow-x: hidden !important;
+  }
+
+  h1, h2, h3, h4, h5, h6, p, span, a, label, li, td, th, div {
+    word-break: break-word !important;
+    overflow-wrap: break-word !important;
+  }
+
+  /* DIÁLOGOS, MODAIS, FORMULÁRIOS E INPUTS */
+  .modal, .modal-dialog, .modal-content, .modal-box {
+    max-width: 95vw !important;
+    width: 95vw !important;
+    margin: 0.5rem auto !important;
+    box-sizing: border-box !important;
+  }
+
+  input, textarea, select, .form-control, .form-input {
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    word-break: break-word !important;
+    overflow-wrap: break-word !important;
+  }
+
+  textarea {
+    white-space: pre-wrap !important;
+  }
+}
+
+
+
+
 
 

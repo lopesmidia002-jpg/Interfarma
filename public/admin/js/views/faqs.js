@@ -19,7 +19,8 @@ export async function renderFaqs(container) {
       </div>
 
       <div class="admin-card">
-        <div class="table-responsive">
+        <!-- VISÃO TABELA (DESKTOP) -->
+        <div class="table-responsive desktop-table-view">
           <table class="admin-table">
             <thead>
               <tr>
@@ -50,6 +51,26 @@ export async function renderFaqs(container) {
             </tbody>
           </table>
         </div>
+
+        <!-- VISÃO CARDS RESPONSIVOS (MOBILE) -->
+        <div class="mobile-card-view">
+          ${faqs.length === 0 ? `
+            <div style="text-align: center; color: var(--admin-text-muted); padding: 2rem;">Nenhuma pergunta cadastrada.</div>
+          ` : faqs.map(f => `
+            <div class="adm-mobile-card" data-id="${f.id}">
+              <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.4rem; gap: 0.5rem;">
+                <span class="badge" style="font-size: 0.72rem;">${f.category}</span>
+                <span style="font-size: 0.75rem; color: #94A3B8; font-weight: 700;">#${f.sort_order || 0}</span>
+              </div>
+              <h3 style="font-size: 0.98rem; font-weight: 700; color: #0F172A; margin-bottom: 0.4rem; line-height: 1.35;">${f.question}</h3>
+              <p style="font-size: 0.82rem; color: #64748B; line-height: 1.5; margin-bottom: 0.5rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">${f.answer}</p>
+              <div class="adm-mobile-card-actions">
+                <button class="btn-adm btn-adm-primary btn-adm-sm btn-edit-faq" data-id="${f.id}">✏️ Editar Pergunta</button>
+                <button class="btn-adm btn-adm-danger btn-adm-sm btn-del-faq" data-id="${f.id}" style="flex: 0 0 46px;" title="Excluir">🗑️</button>
+              </div>
+            </div>
+          `).join('')}
+        </div>
       </div>
 
       <!-- MODAL FAQ -->
@@ -76,7 +97,7 @@ export async function renderFaqs(container) {
 
               <div class="form-group">
                 <label class="form-label">Pergunta *</label>
-                <input type="text" id="faq-question" class="form-control" required placeholder="Ex: Como funciona o desconto na farmácia?">
+                <textarea id="faq-question" class="form-control" rows="2" required placeholder="Ex: Como funciona o desconto na farmácia?" style="resize: vertical; min-height: 54px;"></textarea>
               </div>
 
               <div class="form-group">

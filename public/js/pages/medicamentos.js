@@ -35,6 +35,18 @@ export async function renderMedicamentosPage() {
     displayList = [...displayList, ...sampleNames.slice(0, 36 - displayList.length)];
   }
 
+  let pageData = null;
+  try {
+    pageData = await api.getPage('medicamentos');
+  } catch (e) {
+    pageData = null;
+  }
+  const sec = pageData?.data || {};
+
+  const heroTitle = sec.hero?.title || 'Medicamentos';
+  const heroSubtitle = sec.hero?.subtitle || 'Todas as vantagens em contar com a InterFarma';
+  const heroBg = sec.hero?.image_url ? `background-image: url('${sec.hero.image_url}');` : '';
+
   function render(filter = '') {
     const query = filter.toLowerCase().trim();
     const filtered = query
@@ -44,14 +56,14 @@ export async function renderMedicamentosPage() {
     app.innerHTML = `
       <div style="background: #FFFFFF;">
         <!-- HERO BANNER DA PÁGINA (FOTO COM TÍTULO 'Medicamentos' CENTRALIZADO) -->
-        <section class="page-hero-header">
+        <section class="page-hero-header" style="${heroBg}">
           <div class="page-hero-header-overlay"></div>
           <div class="page-hero-header-content">
             <h1 class="page-hero-header-title">
-              Medicamentos
+              ${heroTitle}
             </h1>
             <p class="page-hero-header-subtitle">
-              Todas as vantagens em contar com a InterFarma
+              ${heroSubtitle}
             </p>
           </div>
         </section>
@@ -93,10 +105,9 @@ export async function renderMedicamentosPage() {
         </section>
 
         <!-- BANNER DE LARGURA TOTAL: FAÇA JÁ SEU PEDIDO -->
-        <section style="position: relative; background: url('/asserts/Rectangle2.png') center/cover no-repeat; padding: 5.5rem 1rem; text-align: center; color: #FFFFFF;">
-          <div style="position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(0, 0, 0, 0.42); z-index: 1;"></div>
+        <section class="med-panoramic-banner">
           <div class="container" style="position: relative; z-index: 2; max-width: 650px;">
-            <h2 style="font-size: 2.35rem; font-weight: 800; color: #FFFFFF; margin-bottom: 1.75rem; letter-spacing: -0.01em;">Faça já seu pedido</h2>
+            <h2 style="font-size: 2.35rem; font-weight: 800; color: #FFFFFF; margin-bottom: 1.5rem; letter-spacing: -0.01em;">Faça já seu pedido</h2>
             <a href="/contato" class="btn" style="background-color: #2CA4B0; color: #FFFFFF; font-weight: 700; font-size: 0.95rem; padding: 0.85rem 2.25rem; border-radius: 6px; box-shadow: 0 4px 14px rgba(44, 164, 176, 0.4); text-decoration: none; display: inline-block;" data-route="contato">
               Fale com nossos especialistas
             </a>
@@ -137,15 +148,13 @@ export async function renderMedicamentosPage() {
       });
     }
 
-    // Clique em qualquer medicamento
+    // Clique em qualquer medicamento -> Abrir página de detalhes do medicamento
     document.querySelectorAll('.med-item-card').forEach(card => {
       card.addEventListener('click', () => {
         const text = card.textContent.trim();
-        showToast(`Medicamento selecionado: ${text}. Redirecionando para cotação...`, 'info');
-        setTimeout(() => {
-          window.history.pushState({}, '', '/contato');
-          window.dispatchEvent(new PopStateEvent('popstate'));
-        }, 800);
+        const slug = encodeURIComponent(text.toLowerCase().replace(/\s+/g, '-'));
+        window.history.pushState({}, '', `/medicamento/${slug}`);
+        window.dispatchEvent(new PopStateEvent('popstate'));
       });
     });
 

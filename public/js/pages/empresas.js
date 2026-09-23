@@ -4,44 +4,61 @@ import { showToast } from '../components.js';
 export async function renderEmpresasPage() {
   const app = document.getElementById('app');
 
-  const clientTypes = [
+  let pageData = null;
+  try {
+    pageData = await api.getPage('empresas');
+  } catch (e) {
+    pageData = null;
+  }
+  const sec = pageData?.data || {};
+
+  const heroTitle = sec.hero?.title || 'Empresas';
+  const heroSubtitle = sec.hero?.subtitle || 'Todas as vantagens em contar com a InterFarma';
+  const heroBg = sec.hero?.image_url ? `background-image: url('${sec.hero.image_url}');` : '';
+
+  const defaultClients = [
     {
       title: 'Clínicas',
-      desc: 'lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ultricies felis nec urna feugiat faucibus. Sed tortor enim, dignissim ac massa quis, scelerisque feugiat ligula. Phasellus ac elit vitae felis tincidunt porta.'
+      desc: 'Atendimento ágil para clínicas médicas e de infusão com fornecimento direto e pontual.'
     },
     {
       title: 'Hospitais Públicos',
-      desc: 'lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ultricies felis nec urna feugiat faucibus. Sed tortor enim, dignissim ac massa quis, scelerisque feugiat ligula. Phasellus ac elit vitae felis tincidunt porta.'
+      desc: 'Assessoria completa em processos de importação emergencial e licitações em saúde.'
     },
     {
       title: 'Distribuidoras',
-      desc: 'lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ultricies felis nec urna feugiat faucibus. Sed tortor enim, dignissim ac massa quis, scelerisque feugiat ligula. Phasellus ac elit vitae felis tincidunt porta.'
+      desc: 'Parcerias estratégicas para suprimento de produtos especiais e demandas específicas.'
     },
     {
       title: 'Indústrias',
-      desc: 'lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ultricies felis nec urna feugiat faucibus. Sed tortor enim, dignissim ac massa quis, scelerisque feugiat ligula. Phasellus ac elit vitae felis tincidunt porta.'
+      desc: 'Programas de benefícios corporativos e suporte farmacêutico empresarial.'
     },
     {
       title: 'Hospitais Privados',
-      desc: 'lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ultricies felis nec urna feugiat faucibus. Sed tortor enim, dignissim ac massa quis, scelerisque feugiat ligula. Phasellus ac elit vitae felis tincidunt porta.'
+      desc: 'Fornecimento contínuo de itens de alto custo e suporte em protocolos complexos.'
     },
     {
       title: 'Secretarias de Saúde',
-      desc: 'lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ultricies felis nec urna feugiat faucibus. Sed tortor enim, dignissim ac massa quis, scelerisque feugiat ligula. Phasellus ac elit vitae felis tincidunt porta.'
+      desc: 'Gestão transparente em demandas judiciais e atendimento prioritário a pacientes.'
     }
   ];
+
+  const clientsTitle = sec.empresas_atendidas?.title || 'Empresas que atendemos';
+  const clientTypes = (sec.empresas_atendidas?.extra_data?.clients && sec.empresas_atendidas.extra_data.clients.length > 0)
+    ? sec.empresas_atendidas.extra_data.clients
+    : defaultClients;
 
   app.innerHTML = `
     <div style="background: #FFFFFF;">
       <!-- HERO BANNER DA PÁGINA (FOTO INSTITUCIONAL COM TÍTULO E SUBTÍTULO) -->
-      <section class="page-hero-header">
+      <section class="page-hero-header" style="${heroBg}">
         <div class="page-hero-header-overlay"></div>
         <div class="page-hero-header-content">
           <h1 class="page-hero-header-title">
-            Empresas
+            ${heroTitle}
           </h1>
           <p class="page-hero-header-subtitle">
-            Todas as vantagens em contar com a InterFarma
+            ${heroSubtitle}
           </p>
         </div>
       </section>
@@ -52,7 +69,7 @@ export async function renderEmpresasPage() {
           
           <div style="text-align: center; margin-bottom: 3rem;">
             <h2 style="font-size: 1.85rem; font-weight: 800; color: #153258; letter-spacing: -0.01em; text-align: center;">
-              Empresas que atendemos
+              ${clientsTitle}
             </h2>
           </div>
 
@@ -60,10 +77,10 @@ export async function renderEmpresasPage() {
             ${clientTypes.map(c => `
               <div class="client-type-card" style="background: #FFFFFF; border: 1px solid #EBF1F6; border-radius: 16px; padding: 2.25rem 1.75rem; text-align: center; box-shadow: 0 4px 16px rgba(0,0,0,0.03); transition: var(--transition);">
                 <h3 style="font-size: 1.15rem; font-weight: 800; color: #178272; margin-bottom: 1rem; line-height: 1.35; text-align: center;">
-                  ${c.title}
+                  ${c.title || ''}
                 </h3>
                 <p style="font-size: 0.85rem; color: #718096; line-height: 1.6; text-align: center;">
-                  ${c.desc}
+                  ${c.desc || ''}
                 </p>
               </div>
             `).join('')}
@@ -72,14 +89,14 @@ export async function renderEmpresasPage() {
         </div>
       </section>
 
-      <!-- SEÇÃO 2: FORMULÁRIO "ENTRE EM CONTATO" (CARD BRANCO FLUTUANTE CONFORME A FOTO) -->
-      <section style="padding: 1rem 1rem 5rem 1rem; background: #FFFFFF;">
-        <div class="container" style="max-width: 820px;">
-          <div class="empresas-contact-card" style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 20px; padding: 3rem 2.5rem 2.5rem 2.5rem; box-shadow: 0 10px 30px rgba(0,0,0,0.03); margin: 0 auto;">
+      <!-- SEÇÃO 2: FORMULÁRIO "ENTRE EM CONTATO" (CARD BRANCO FLUTUANTE SOBREPONDO A SEÇÃO AZUL) -->
+      <section class="empresas-contact-section">
+        <div class="container" style="max-width: 860px;">
+          <div class="empresas-contact-card">
             
             <!-- TÍTULO DO FORMULÁRIO -->
             <div style="text-align: center; margin-bottom: 2.5rem;">
-              <h2 style="font-size: 1.95rem; font-weight: 800; color: #153258; letter-spacing: -0.01em; text-align: center;">
+              <h2 style="font-size: 2.15rem; font-weight: 800; color: #153258; letter-spacing: -0.01em; text-align: center;">
                 Entre em contato
               </h2>
             </div>
@@ -114,7 +131,7 @@ export async function renderEmpresasPage() {
 
               <!-- LINHA 4: BOTÃO ENVIAR (ALINHADO E RESPONSIVO) -->
               <div class="form-submit-container">
-                <button type="submit" id="btn-submit-empresas-contact" class="btn" style="background-color: #2CA4B0; color: #FFFFFF; font-weight: 700; font-size: 0.925rem; padding: 0.8rem 2.5rem; border-radius: 6px; border: none; cursor: pointer; box-shadow: 0 2px 8px rgba(44, 164, 176, 0.3); transition: all 0.2s ease;">
+                <button type="submit" id="btn-submit-empresas-contact" class="btn" style="background-color: #2CA4B0; color: #FFFFFF; font-weight: 700; font-size: 0.95rem; padding: 0.85rem 2.75rem; border-radius: 6px; border: none; cursor: pointer; box-shadow: 0 4px 14px rgba(44, 164, 176, 0.35); transition: all 0.2s ease;">
                   Enviar
                 </button>
               </div>
@@ -125,10 +142,10 @@ export async function renderEmpresasPage() {
         </div>
       </section>
 
-      <!-- SEÇÃO LEAD: INFORME SEU E-MAIL (FUNDO AZUL CLARO SUAVE CONFORME FOTO) -->
-      <section style="background: #F4F9FD; padding: 4.5rem 1rem 5rem 1rem; text-align: center;">
+      <!-- SEÇÃO LEAD: INFORME SEU E-MAIL (FUNDO AZUL CLARO SUAVE SOBREPOSTO PELO CARD) -->
+      <section class="empresas-lead-section">
         <div class="container" style="max-width: 650px;">
-          <h2 style="font-size: 1.8rem; font-weight: 800; color: #153258; margin-bottom: 2rem; line-height: 1.35; letter-spacing: -0.01em;">
+          <h2 style="font-size: 1.85rem; font-weight: 800; color: #153258; margin-bottom: 2rem; line-height: 1.35; letter-spacing: -0.01em;">
             Informe seu e-mail que<br>entraremos em contato
           </h2>
 

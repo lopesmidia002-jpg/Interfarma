@@ -26,7 +26,8 @@ export async function renderMedicines(container) {
           </div>
         </div>
 
-        <div class="table-responsive">
+        <!-- VISÃO TABELA (DESKTOP) -->
+        <div class="table-responsive desktop-table-view">
           <table class="admin-table" id="table-meds">
             <thead>
               <tr>
@@ -66,6 +67,32 @@ export async function renderMedicines(container) {
             </tbody>
           </table>
         </div>
+
+        <!-- VISÃO CARDS RESPONSIVOS (MOBILE) -->
+        <div class="mobile-card-view" id="mobile-med-list">
+          ${medicines.length === 0 ? `
+            <div style="text-align: center; color: var(--admin-text-muted); padding: 2rem;">Nenhum medicamento cadastrado.</div>
+          ` : medicines.map(m => `
+            <div class="adm-mobile-card" data-id="${m.id}" data-search="${m.name.toLowerCase()} ${m.active_principle?.toLowerCase() || ''}">
+              <div style="display: flex; gap: 0.85rem; align-items: flex-start;">
+                <img src="${m.image_url || '/asserts/Group-56088.png'}" alt="${m.name}" style="width: 50px; height: 50px; object-fit: contain; background: #F8FAFC; border-radius: var(--radius-sm); border: 1px solid var(--admin-border); padding: 3px; flex-shrink: 0;">
+                <div style="flex: 1; min-width: 0;">
+                  <h3 style="font-size: 1rem; font-weight: 700; color: #0F172A; margin-bottom: 0.2rem; line-height: 1.3;">${m.name}</h3>
+                  <p style="font-size: 0.82rem; color: #64748B; margin-bottom: 0.35rem;">${m.active_principle || ''} ${m.dosage ? '• ' + m.dosage : ''}</p>
+                  <div style="display: flex; gap: 0.4rem; flex-wrap: wrap; align-items: center;">
+                    <span class="badge" style="font-size: 0.72rem;">${m.category}</span>
+                    <span style="background: #DCFCE7; color: #166534; font-weight: 700; font-size: 0.72rem; padding: 2px 6px; border-radius: 4px;">${m.discount_percentage}% OFF</span>
+                    <strong style="color: var(--admin-primary); font-size: 0.95rem;">R$ ${Number(m.final_price).toFixed(2).replace('.', ',')}</strong>
+                  </div>
+                </div>
+              </div>
+              <div class="adm-mobile-card-actions">
+                <button class="btn-adm btn-adm-primary btn-adm-sm btn-edit-med" data-id="${m.id}">✏️ Editar Medicamento</button>
+                <button class="btn-adm btn-adm-danger btn-adm-sm btn-del-med" data-id="${m.id}" data-name="${m.name}" style="flex: 0 0 46px;" title="Excluir">🗑️</button>
+              </div>
+            </div>
+          `).join('')}
+        </div>
       </div>
 
       <!-- MODAL CADASTRO / EDIÇÃO MEDICAMENTO -->
@@ -82,11 +109,11 @@ export async function renderMedicines(container) {
               <div class="form-grid-2">
                 <div class="form-group">
                   <label class="form-label">Nome Comercial *</label>
-                  <input type="text" id="med-name" class="form-control" required placeholder="Ex: Dipirona Monoidratada">
+                  <textarea id="med-name" class="form-control" rows="1" style="resize: vertical; min-height: 44px;" required placeholder="Ex: Dipirona Monoidratada"></textarea>
                 </div>
                 <div class="form-group">
                   <label class="form-label">Princípio Ativo</label>
-                  <input type="text" id="med-principle" class="form-control" placeholder="Ex: Dipirona 500mg">
+                  <textarea id="med-principle" class="form-control" rows="1" style="resize: vertical; min-height: 44px;" placeholder="Ex: Dipirona 500mg"></textarea>
                 </div>
               </div>
 
@@ -134,7 +161,7 @@ export async function renderMedicines(container) {
 
               <div class="form-group">
                 <label class="form-label">Foto do Produto</label>
-                <div style="display: flex; gap: 1rem; align-items: center; margin-bottom: 0.5rem;">
+                <div style="display: flex; gap: 1rem; align-items: center; margin-bottom: 0.5rem; flex-wrap: wrap;">
                   <img id="med-preview-img" src="/asserts/Group-56088.png" style="width: 48px; height: 48px; object-fit: contain; background: #F8FAFC; border: 1px solid var(--admin-border); border-radius: var(--radius-sm); padding: 4px;">
                   <input type="file" id="med-file-img" accept="image/*" style="display: none;">
                   <button type="button" class="btn-adm btn-adm-outline btn-adm-sm" onclick="document.getElementById('med-file-img').click()">Upload de Foto</button>
@@ -144,7 +171,7 @@ export async function renderMedicines(container) {
 
               <div class="form-group">
                 <label class="form-label">Apresentação / Descrição</label>
-                <input type="text" id="med-presentation" class="form-control" placeholder="Ex: Caixa com 20 comprimidos revestidos">
+                <textarea id="med-presentation" class="form-control" rows="2" style="resize: vertical; min-height: 48px;" placeholder="Ex: Caixa com 20 comprimidos revestidos"></textarea>
               </div>
             </div>
             <div class="modal-footer">
@@ -163,6 +190,10 @@ export async function renderMedicines(container) {
       document.querySelectorAll('#table-meds tbody tr').forEach(row => {
         const search = row.getAttribute('data-search') || '';
         row.style.display = search.includes(term) ? '' : 'none';
+      });
+      document.querySelectorAll('#mobile-med-list .adm-mobile-card').forEach(card => {
+        const search = card.getAttribute('data-search') || '';
+        card.style.display = search.includes(term) ? '' : 'none';
       });
     });
 

@@ -4,17 +4,43 @@ import { showToast } from '../components.js';
 export async function renderComoFuncionaPage() {
   const app = document.getElementById('app');
 
+  let pageData = null;
+  try {
+    pageData = await api.getPage('como-funciona');
+  } catch (e) {
+    pageData = null;
+  }
+  const sec = pageData?.data || {};
+
+  const heroTitle = sec.hero?.title || 'Como funciona';
+  const heroSubtitle = sec.hero?.subtitle || 'Confira todo o processo da InterFarma';
+  const heroBg = sec.hero?.image_url ? `background-image: url('${sec.hero.image_url}');` : '';
+  const introText = sec.hero?.content || 'A InterFarma trabalha para auxiliar todos os brasileiros na<br>importação de medicamentos, sem tributação alfandegária*.';
+
+  const defaultSteps = [
+    { step: '01', title: 'Prescrição Médica', desc: 'Uma prescrição é uma rotina de cuidados com a saúde, implementados por um médico ou outro profissional de saúde qualificado, voltados para um paciente em específico.' },
+    { step: '02', title: 'Fornecedores', desc: 'Verificamos a disponibilidade nos fornecedores exclusivos e qualificados espalhados em vários países que forneça o melhor custo benefício e menor prazo de embarque.' },
+    { step: '03', title: 'Aprovação', desc: 'Apresentamos ao cliente todas as informações necessárias sobre o medicamento, como: fabricante, dosagem, quantidade, prazo e custo total.' },
+    { step: '04', title: 'Pagamento', desc: 'O pagamento é efetuado através de transferência bancária ou boleto, garantindo total segurança na transação financeira internacional.' },
+    { step: '05', title: 'Envio & Logística', desc: 'O medicamento é despachado com controle rigoroso de temperatura e rastreamento em tempo real por nossa equipe técnica.' },
+    { step: '06', title: 'Entrega no Destino', desc: 'O medicamento chega com total segurança no endereço indicado ou na clínica/hospital responsável pelo tratamento.' }
+  ];
+
+  const steps = (sec.steps?.extra_data?.steps && sec.steps.extra_data.steps.length > 0)
+    ? sec.steps.extra_data.steps
+    : defaultSteps;
+
   app.innerHTML = `
     <div style="background: #FFFFFF;">
       <!-- HERO BANNER (FOTO COM TÍTULO E SUBTÍTULO) -->
-      <section class="page-hero-header">
+      <section class="page-hero-header" style="${heroBg}">
         <div class="page-hero-header-overlay"></div>
         <div class="page-hero-header-content">
           <h1 class="page-hero-header-title">
-            Como funciona
+            ${heroTitle}
           </h1>
           <p class="page-hero-header-subtitle">
-            Confira todo o processo da InterFarma
+            ${heroSubtitle}
           </p>
         </div>
       </section>
@@ -23,8 +49,7 @@ export async function renderComoFuncionaPage() {
       <section style="padding: 3.5rem 1.5rem 2.5rem 1.5rem; text-align: center;">
         <div class="container" style="max-width: 760px;">
           <p style="font-size: 1.05rem; color: #64748B; line-height: 1.7; font-weight: 500;">
-            A InterFarma trabalha para auxiliar todos os brasileiros na<br>
-            importação de medicamentos, sem tributação alfandegária*.
+            ${introText.replace(/\n/g, '<br>')}
           </p>
         </div>
       </section>
@@ -36,16 +61,16 @@ export async function renderComoFuncionaPage() {
           <!-- LINHA 1: PASSOS 1, 2 E 3 (ESQUERDA PARA DIREITA) -->
           <div class="flow-row-top" style="display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap;">
             
-            <!-- PASSO 1: PRESCRIÇÃO MÉDICA -->
+            <!-- PASSO 1 -->
             <div class="flow-step-card" style="flex: 1; min-width: 250px; background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 16px; padding: 2.25rem 1.25rem 1.75rem 1.25rem; text-align: center; position: relative; box-shadow: 0 6px 20px rgba(0,0,0,0.03);">
               <div style="position: absolute; top: -20px; left: 50%; transform: translateX(-50%); width: 42px; height: 42px; border-radius: 50%; background: #4FD1C5; color: #FFFFFF; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(79, 209, 197, 0.4);">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
                 </svg>
               </div>
-              <h3 style="font-size: 1.05rem; font-weight: 800; color: #153258; margin-top: 0.5rem; margin-bottom: 0.75rem;">Prescrição Médica</h3>
+              <h3 style="font-size: 1.05rem; font-weight: 800; color: #153258; margin-top: 0.5rem; margin-bottom: 0.75rem;">${steps[0]?.title || defaultSteps[0].title}</h3>
               <p style="font-size: 0.8rem; color: #718096; line-height: 1.55;">
-                Uma prescrição é uma rotina de cuidados com a saúde, implementados por um médico ou outro profissional de saúde qualificado, voltados para um paciente em específico.
+                ${steps[0]?.desc || defaultSteps[0].desc}
               </p>
             </div>
 
@@ -56,16 +81,16 @@ export async function renderComoFuncionaPage() {
               </svg>
             </div>
 
-            <!-- PASSO 2: FORNECEDORES -->
+            <!-- PASSO 2 -->
             <div class="flow-step-card" style="flex: 1; min-width: 250px; background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 16px; padding: 2.25rem 1.25rem 1.75rem 1.25rem; text-align: center; position: relative; box-shadow: 0 6px 20px rgba(0,0,0,0.03);">
               <div style="position: absolute; top: -20px; left: 50%; transform: translateX(-50%); width: 42px; height: 42px; border-radius: 50%; background: #4FD1C5; color: #FFFFFF; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(79, 209, 197, 0.4);">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z"/>
                 </svg>
               </div>
-              <h3 style="font-size: 1.05rem; font-weight: 800; color: #153258; margin-top: 0.5rem; margin-bottom: 0.75rem;">Fornecedores</h3>
+              <h3 style="font-size: 1.05rem; font-weight: 800; color: #153258; margin-top: 0.5rem; margin-bottom: 0.75rem;">${steps[1]?.title || defaultSteps[1].title}</h3>
               <p style="font-size: 0.8rem; color: #718096; line-height: 1.55;">
-                Verificamos a disponibilidade nos fornecedores exclusivos e qualificados espalhados em vários países que forneça o melhor custo benefício e menor prazo de embarque.
+                ${steps[1]?.desc || defaultSteps[1].desc}
               </p>
             </div>
 
@@ -76,16 +101,16 @@ export async function renderComoFuncionaPage() {
               </svg>
             </div>
 
-            <!-- PASSO 3: APROVAÇÃO -->
+            <!-- PASSO 3 -->
             <div class="flow-step-card" style="flex: 1; min-width: 250px; background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 16px; padding: 2.25rem 1.25rem 1.75rem 1.25rem; text-align: center; position: relative; box-shadow: 0 6px 20px rgba(0,0,0,0.03);">
               <div style="position: absolute; top: -20px; left: 50%; transform: translateX(-50%); width: 42px; height: 42px; border-radius: 50%; background: #4FD1C5; color: #FFFFFF; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(79, 209, 197, 0.4);">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
                 </svg>
               </div>
-              <h3 style="font-size: 1.05rem; font-weight: 800; color: #153258; margin-top: 0.5rem; margin-bottom: 0.75rem;">Aprovação</h3>
+              <h3 style="font-size: 1.05rem; font-weight: 800; color: #153258; margin-top: 0.5rem; margin-bottom: 0.75rem;">${steps[2]?.title || defaultSteps[2].title}</h3>
               <p style="font-size: 0.8rem; color: #718096; line-height: 1.55;">
-                Aprovação do orçamento e documentos do paciente disponíveis. Enviados através dos correios ou via emails. Com total discrição e confiabilidade com o paciente.
+                ${steps[2]?.desc || defaultSteps[2].desc}
               </p>
             </div>
 
@@ -101,16 +126,16 @@ export async function renderComoFuncionaPage() {
           <!-- LINHA 2: PASSOS 6, 5 E 4 (DIREITA PARA ESQUERDA) -->
           <div class="flow-row-bottom" style="display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap;">
             
-            <!-- PASSO 6: GARANTIA DE ENTREGA -->
+            <!-- PASSO 6 -->
             <div class="flow-step-card" style="flex: 1; min-width: 250px; background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 16px; padding: 2.25rem 1.25rem 1.75rem 1.25rem; text-align: center; position: relative; box-shadow: 0 6px 20px rgba(0,0,0,0.03);">
               <div style="position: absolute; top: -20px; left: 50%; transform: translateX(-50%); width: 42px; height: 42px; border-radius: 50%; background: #4FD1C5; color: #FFFFFF; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(79, 209, 197, 0.4);">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
                 </svg>
               </div>
-              <h3 style="font-size: 1.05rem; font-weight: 800; color: #153258; margin-top: 0.5rem; margin-bottom: 0.75rem;">Garantia de Entrega</h3>
+              <h3 style="font-size: 1.05rem; font-weight: 800; color: #153258; margin-top: 0.5rem; margin-bottom: 0.75rem;">${steps[5]?.title || defaultSteps[5].title}</h3>
               <p style="font-size: 0.8rem; color: #718096; line-height: 1.55;">
-                Garantimos a entrega do medicamento para o paciente, hospitais e clínicas onde ele estiver. As entregas são realizadas em embalagens certificadas.
+                ${steps[5]?.desc || defaultSteps[5].desc}
               </p>
             </div>
 
@@ -121,16 +146,16 @@ export async function renderComoFuncionaPage() {
               </svg>
             </div>
 
-            <!-- PASSO 5: ANVISA - RF -->
+            <!-- PASSO 5 -->
             <div class="flow-step-card" style="flex: 1; min-width: 250px; background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 16px; padding: 2.25rem 1.25rem 1.75rem 1.25rem; text-align: center; position: relative; box-shadow: 0 6px 20px rgba(0,0,0,0.03);">
               <div style="position: absolute; top: -20px; left: 50%; transform: translateX(-50%); width: 42px; height: 42px; border-radius: 50%; background: #4FD1C5; color: #FFFFFF; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(79, 209, 197, 0.4);">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/>
                 </svg>
               </div>
-              <h3 style="font-size: 1.05rem; font-weight: 800; color: #153258; margin-top: 0.5rem; margin-bottom: 0.75rem;">ANVISA – RF</h3>
+              <h3 style="font-size: 1.05rem; font-weight: 800; color: #153258; margin-top: 0.5rem; margin-bottom: 0.75rem;">${steps[4]?.title || defaultSteps[4].title}</h3>
               <p style="font-size: 0.8rem; color: #718096; line-height: 1.55;">
-                Produto no Brasil necessita ser fiscalizado pelos setores responsáveis ANVISA – RF. Inspeção realizada, os mesmos fornecerão os documentos comprobatórios da anuência em cada setor.
+                ${steps[4]?.desc || defaultSteps[4].desc}
               </p>
             </div>
 
@@ -141,16 +166,16 @@ export async function renderComoFuncionaPage() {
               </svg>
             </div>
 
-            <!-- PASSO 4: AUTORIZAÇÃO -->
+            <!-- PASSO 4 -->
             <div class="flow-step-card" style="flex: 1; min-width: 250px; background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 16px; padding: 2.25rem 1.25rem 1.75rem 1.25rem; text-align: center; position: relative; box-shadow: 0 6px 20px rgba(0,0,0,0.03);">
               <div style="position: absolute; top: -20px; left: 50%; transform: translateX(-50%); width: 42px; height: 42px; border-radius: 50%; background: #4FD1C5; color: #FFFFFF; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(79, 209, 197, 0.4);">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
                 </svg>
               </div>
-              <h3 style="font-size: 1.05rem; font-weight: 800; color: #153258; margin-top: 0.5rem; margin-bottom: 0.75rem;">Autorização</h3>
+              <h3 style="font-size: 1.05rem; font-weight: 800; color: #153258; margin-top: 0.5rem; margin-bottom: 0.75rem;">${steps[3]?.title || defaultSteps[3].title}</h3>
               <p style="font-size: 0.8rem; color: #718096; line-height: 1.55;">
-                Autorizamos o fornecedor a embarcar o produto, certificamos com a origem o controle de temperatura e documentos para monitoramento da carga.
+                ${steps[3]?.desc || defaultSteps[3].desc}
               </p>
             </div>
 
@@ -159,15 +184,31 @@ export async function renderComoFuncionaPage() {
         </div>
       </section>
 
-      <!-- BANNER PANORÂMICO "FAÇA JÁ SEU PEDIDO" -->
-      <section style="position: relative; background: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)), url('/asserts/equipe-panoramica.png') center center / cover no-repeat; padding: 5.5rem 1.5rem; text-align: center; color: #FFFFFF;">
-        <div class="container" style="max-width: 800px; position: relative; z-index: 2;">
-          <h2 style="font-size: 2.35rem; font-weight: 800; color: #FFFFFF; margin-bottom: 1.5rem; letter-spacing: -0.01em;">
-            Faça já seu pedido
-          </h2>
-          <a href="/contato" class="btn" style="background-color: #2CA4B0; color: #FFFFFF; font-weight: 700; font-size: 0.95rem; padding: 0.85rem 2.25rem; border-radius: 6px; box-shadow: 0 4px 14px rgba(44, 164, 176, 0.35); text-decoration: none; display: inline-block;" data-route="contato">
-            Fale com nossos especialistas
-          </a>
+      <!-- SEÇÃO CARD "FAÇA JÁ SEU PEDIDO" (CONFORME DESIGN DE REFERÊNCIA) -->
+      <section class="cf-cta-section">
+        <div class="container">
+          <div class="cf-cta-wrapper">
+            <div class="cf-cta-card">
+              
+              <!-- FOTO DA EQUIPE À ESQUERDA -->
+              <div class="cf-cta-image-wrapper">
+                <img src="/asserts/equipe-sorrindo.jpg" alt="Equipe InterFarma" onerror="this.src='/asserts/Rectangle Copy 4.jpg';">
+              </div>
+
+              <!-- CONTEÚDO À DIREITA (TÍTULO + BOTÃO) -->
+              <div class="cf-cta-content">
+                <h2 class="cf-cta-title">
+                  Faça já seu pedido
+                </h2>
+                <div>
+                  <a href="/contato" class="cf-cta-btn" data-route="contato">
+                    Fale com nossos especialistas
+                  </a>
+                </div>
+              </div>
+
+            </div>
+          </div>
         </div>
       </section>
 

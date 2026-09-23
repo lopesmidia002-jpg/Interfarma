@@ -66,7 +66,7 @@ export async function renderDashboard(container) {
       </div>
 
       <!-- ATALHOS RÁPIDOS & ÚLTIMOS CONTATOS -->
-      <div style="display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 1.75rem;">
+      <div class="dashboard-main-grid">
         <!-- ÚLTIMAS MENSAGENS -->
         <div class="admin-card">
           <div class="card-header-flex">
@@ -77,7 +77,8 @@ export async function renderDashboard(container) {
           ${(messagesData || []).slice(0, 5).length === 0 ? `
             <p style="color: var(--admin-text-muted); text-align: center; padding: 2rem 0;">Nenhuma mensagem recebida até o momento.</p>
           ` : `
-            <div class="table-responsive">
+            <!-- VISÃO TABELA (DESKTOP) -->
+            <div class="table-responsive desktop-table-view">
               <table class="admin-table">
                 <thead>
                   <tr>
@@ -102,6 +103,29 @@ export async function renderDashboard(container) {
                   `).join('')}
                 </tbody>
               </table>
+            </div>
+
+            <!-- VISÃO CARDS RESPONSIVOS (MOBILE) -->
+            <div class="mobile-card-view">
+              ${(messagesData || []).slice(0, 5).map(m => `
+                <div class="adm-mobile-card" style="padding: 0.9rem; margin-bottom: 0.65rem;">
+                  <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 0.5rem; margin-bottom: 0.35rem;">
+                    <div>
+                      <strong style="font-size: 0.95rem; color: #0F172A; display: block;">${m.name}</strong>
+                      <span style="font-size: 0.82rem; color: #64748B;">${m.email}</span>
+                    </div>
+                    <span style="font-size: 0.72rem; font-weight: 700; padding: 2px 7px; border-radius: 4px; flex-shrink: 0; ${m.status === 'unread' ? 'background: #FEE2E2; color: #DC2626;' : m.status === 'replied' ? 'background: #DCFCE7; color: #166534;' : 'background: #E2E8F0; color: #475569;'}">
+                      ${m.status === 'unread' ? 'Não lida' : m.status === 'replied' ? 'Respondida' : 'Lida'}
+                    </span>
+                  </div>
+                  <div style="font-size: 0.84rem; color: #334155; margin-bottom: 0.25rem;">
+                    <strong>Assunto:</strong> ${m.subject || 'Contato'}
+                  </div>
+                  <div style="font-size: 0.76rem; color: #94A3B8; text-align: right;">
+                    📅 ${new Date(m.created_at).toLocaleDateString('pt-BR')}
+                  </div>
+                </div>
+              `).join('')}
             </div>
           `}
         </div>
