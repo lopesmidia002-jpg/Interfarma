@@ -34,11 +34,11 @@ export async function renderDiferenciaisPage() {
   const techTitle = sec.tecnologia?.title || 'Tecnologia e Investimento';
   const defaultFeatures = [
     { title: 'Nossa Estrutura', desc: 'Nossas estruturas contam com laboratórios físico químicos e microbiológicos - RDC 10/2011' },
-    { title: 'Monitoramento da Carga', desc: 'Nossas estruturas contam com laboratórios físico químicos e microbiológicos - RDC 10/2011' },
-    { title: 'Software de Monitoramento de Temperatura', desc: 'Nossas estruturas contam com laboratórios físico químicos e microbiológicos - RDC 10/2011' },
-    { title: 'Sistema de dados', desc: 'Nossas estruturas contam com laboratórios físico químicos e microbiológicos - RDC 10/2011' },
-    { title: 'Veículo Próprio para Transporte', desc: 'Nossas estruturas contam com laboratórios físico químicos e microbiológicos - RDC 10/2011' },
-    { title: 'Acompanhamento do Tratamento do Paciente', desc: 'Nossas estruturas contam com laboratórios físico químicos e microbiológicos - RDC 10/2011' }
+    { title: 'Monitoramento da Carga', desc: 'Rastreamento contínuo em tempo real durante todo o trajeto internacional e nacional.' },
+    { title: 'Software de Temperatura', desc: 'Sensores térmicos conectados que registram a curva de temperatura minuto a minuto.' },
+    { title: 'Sistema de Dados', desc: 'Plataforma em nuvem com criptografia de ponta a ponta e compliance LGPD.' },
+    { title: 'Veículo Próprio', desc: 'Frota dedicada e climatizada para transportes prioritários e urgentes.' },
+    { title: 'Acompanhamento do Paciente', desc: 'Suporte humanizado e canal direto para esclarecimento de dúvidas e orientações.' }
   ];
   const features = (sec.tecnologia?.extra_data?.features && sec.tecnologia.extra_data.features.length > 0)
     ? sec.tecnologia.extra_data.features
