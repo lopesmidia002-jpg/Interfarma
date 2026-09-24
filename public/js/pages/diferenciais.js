@@ -77,8 +77,8 @@ export async function renderDiferenciaisPage() {
             <div class="dif-photo-container">
               <div class="dif-photo-backdrop-blue"></div>
               <div class="dif-blob-tl">
-                <svg width="48" height="48" viewBox="0 0 100 100" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity="0.95">
-                  <path d="M 25 48 C 22 34, 40 22, 60 25 C 76 27, 82 42, 74 54 C 64 68, 42 66, 34 54 C 26 42, 44 32, 64 36 C 80 40, 80 62, 68 72 C 54 82, 38 78, 30 64"/>
+                <svg width="74" height="74" viewBox="0 0 100 100" fill="none" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" opacity="0.95">
+                  <path d="M 18 42 C 16 26, 34 16, 48 24 C 60 30, 52 46, 38 50 C 24 54, 18 70, 32 78 C 44 84, 58 72, 50 56 C 44 40, 26 32, 38 22 C 48 14, 66 22, 70 36 C 74 48, 60 62, 46 62 C 34 62, 30 48, 44 40 C 56 32, 70 42, 78 52"/>
                 </svg>
               </div>
               <div class="dif-photo-frame">
@@ -138,8 +138,8 @@ export async function renderDiferenciaisPage() {
             <div class="dif-photo-container">
               <div class="dif-photo-backdrop-blue" style="left: auto; right: -20px; top: -20px;"></div>
               <div class="dif-blob-tr">
-                <svg width="48" height="48" viewBox="0 0 100 100" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity="0.95">
-                  <path d="M 25 48 C 22 34, 40 22, 60 25 C 76 27, 82 42, 74 54 C 64 68, 42 66, 34 54 C 26 42, 44 32, 64 36 C 80 40, 80 62, 68 72 C 54 82, 38 78, 30 64"/>
+                <svg width="74" height="74" viewBox="0 0 100 100" fill="none" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" opacity="0.95">
+                  <path d="M 18 42 C 16 26, 34 16, 48 24 C 60 30, 52 46, 38 50 C 24 54, 18 70, 32 78 C 44 84, 58 72, 50 56 C 44 40, 26 32, 38 22 C 48 14, 66 22, 70 36 C 74 48, 60 62, 46 62 C 34 62, 30 48, 44 40 C 56 32, 70 42, 78 52"/>
                 </svg>
               </div>
               <div class="dif-photo-frame">
