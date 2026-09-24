@@ -131,7 +131,12 @@ export async function renderDiferenciaisPage() {
 
             <!-- FOTO DO ANALISTA NO COMPUTADOR COM ADORNO (DIREITA) -->
             <div class="dif-photo-container">
-              <div class="dif-photo-backdrop-blue" style="left: auto; right: -18px;"></div>
+              <div class="dif-photo-backdrop-blue" style="left: auto; right: -20px; top: -20px;"></div>
+              <div class="dif-blob-tr">
+                <svg width="44" height="44" viewBox="0 0 100 100" fill="none" stroke="#FFFFFF" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.95">
+                  <path d="M 25 48 C 22 34, 40 22, 60 25 C 76 27, 82 42, 74 54 C 64 68, 42 66, 34 54 C 26 42, 44 32, 64 36 C 80 40, 80 62, 68 72 C 54 82, 38 78, 30 64"/>
+                </svg>
+              </div>
               <div class="dif-photo-frame">
                 <img src="${techImg}" alt="Tecnologia InterFarma" onerror="this.src='/asserts/analista-tecnologia.jpg';">
               </div>
