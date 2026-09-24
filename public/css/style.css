@@ -1100,14 +1100,11 @@ ul {
 
 .dif-blob-tl {
   position: absolute;
-  top: -8px;
-  left: -8px;
+  top: -14px;
+  left: -14px;
   width: 86px;
   height: 86px;
-  background: #F7BA45;
-  border-radius: 46% 54% 60% 40% / 44% 52% 48% 56%;
   z-index: 10;
-  box-shadow: 0 6px 18px rgba(247, 186, 69, 0.4);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1116,14 +1113,11 @@ ul {
 
 .dif-blob-tr {
   position: absolute;
-  top: -8px;
-  right: -8px;
+  top: -14px;
+  right: -14px;
   width: 86px;
   height: 86px;
-  background: #F7BA45;
-  border-radius: 54% 46% 40% 60% / 52% 44% 56% 48%;
   z-index: 10;
-  box-shadow: 0 6px 18px rgba(247, 186, 69, 0.4);
   display: flex;
   align-items: center;
   justify-content: center;
