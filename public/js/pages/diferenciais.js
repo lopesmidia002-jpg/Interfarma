@@ -131,6 +131,7 @@ export async function renderDiferenciaisPage() {
 
             <!-- FOTO DO ANALISTA NO COMPUTADOR COM ADORNO (DIREITA) -->
             <div class="dif-photo-container">
+              <div class="dif-photo-backdrop-blue" style="left: auto; right: -18px;"></div>
               <div class="dif-photo-frame">
                 <img src="${techImg}" alt="Tecnologia InterFarma" onerror="this.src='/asserts/analista-tecnologia.jpg';">
               </div>
