@@ -35,29 +35,29 @@ export async function renderMessages(container) {
               ` : (messages || []).map(m => `
                 <tr data-id="${m.id}">
                   <td>
-                    <select class="form-control select-msg-status" data-id="${m.id}" style="padding: 4px 8px; font-size: 0.8rem; font-weight: 700; width: auto; ${m.status === 'unread' ? 'color: #DC2626; background: #FEE2E2;' : m.status === 'replied' ? 'color: #166534; background: #DCFCE7;' : 'color: #475569; background: #F1F5F9;'}">
+                    <select class="select-msg-status status-${m.status || 'unread'}" data-id="${m.id}">
                       <option value="unread" ${m.status === 'unread' ? 'selected' : ''}>Não lida</option>
                       <option value="read" ${m.status === 'read' ? 'selected' : ''}>Lida</option>
                       <option value="replied" ${m.status === 'replied' ? 'selected' : ''}>Respondida</option>
                     </select>
                   </td>
                   <td>
-                    <strong>${m.name}</strong><br>
-                    <a href="mailto:${m.email}" style="font-size: 0.8rem; color: var(--admin-primary);">${m.email}</a>
+                    <strong style="color: #0F172A;">${m.name}</strong><br>
+                    <a href="mailto:${m.email}" style="font-size: 0.85rem; color: var(--admin-primary); font-weight: 500;">${m.email}</a>
                   </td>
                   <td>
-                    ${m.phone ? `<div>📞 ${m.phone}</div>` : ''}
-                    ${m.company ? `<div style="font-size: 0.8rem; color: var(--admin-text-muted);">🏢 ${m.company}</div>` : ''}
+                    ${m.phone ? `<div style="font-size: 0.85rem; font-weight: 600; color: #334155;">📞 ${m.phone}</div>` : ''}
+                    ${m.company ? `<div style="font-size: 0.8rem; color: var(--admin-text-muted); margin-top: 2px;">🏢 ${m.company}</div>` : ''}
                   </td>
-                  <td><strong>${m.subject || 'Contato'}</strong></td>
-                  <td style="max-width: 280px; font-size: 0.85rem; color: #334155;">
+                  <td><strong style="color: #1E293B;">${m.subject || 'Contato'}</strong></td>
+                  <td style="max-width: 300px; font-size: 0.88rem; color: #334155; line-height: 1.5;">
                     ${m.message}
                   </td>
-                  <td style="font-size: 0.8rem; color: #94A3B8; white-space: nowrap;">
+                  <td style="font-size: 0.82rem; color: #64748B; white-space: nowrap; font-weight: 500;">
                     ${new Date(m.created_at).toLocaleDateString('pt-BR')} ${new Date(m.created_at).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}
                   </td>
                   <td style="text-align: right; white-space: nowrap;">
-                    <button class="btn-adm btn-adm-danger btn-adm-sm btn-del-msg" data-id="${m.id}">🗑️</button>
+                    <button class="btn-adm btn-adm-danger btn-adm-sm btn-del-msg" data-id="${m.id}" title="Excluir mensagem">🗑️ Excluir</button>
                   </td>
                 </tr>
               `).join('')}
@@ -71,41 +71,41 @@ export async function renderMessages(container) {
             <div style="text-align: center; color: var(--admin-text-muted); padding: 2rem;">Nenhuma mensagem recebida.</div>
           ` : (messages || []).map(m => `
             <div class="adm-mobile-card" data-id="${m.id}">
-              <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.45rem; gap: 0.5rem;">
+              <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem; gap: 0.5rem;">
                 <div>
-                  <h3 style="font-size: 1.05rem; font-weight: 700; color: #0F172A; margin-bottom: 0.15rem;">${m.name}</h3>
-                  <a href="mailto:${m.email}" style="font-size: 0.84rem; color: var(--admin-primary); font-weight: 600; display: block; word-break: break-all;">${m.email}</a>
+                  <h3 style="font-size: 1.05rem; font-weight: 700; color: #0F172A; margin-bottom: 0.2rem;">${m.name}</h3>
+                  <a href="mailto:${m.email}" style="font-size: 0.86rem; color: var(--admin-primary); font-weight: 600; display: block; word-break: break-all;">${m.email}</a>
                 </div>
-                <span style="font-size: 0.75rem; color: #94A3B8; white-space: nowrap; flex-shrink: 0;">
+                <span style="font-size: 0.78rem; color: #64748B; font-weight: 600; white-space: nowrap; flex-shrink: 0; background: #F1F5F9; padding: 3px 8px; border-radius: 6px;">
                   ${new Date(m.created_at).toLocaleDateString('pt-BR')}
                 </span>
               </div>
 
               ${(m.phone || m.company) ? `
-                <div style="font-size: 0.82rem; color: #64748B; margin-bottom: 0.5rem; display: flex; gap: 0.75rem; flex-wrap: wrap;">
+                <div style="font-size: 0.85rem; color: #475569; margin-bottom: 0.6rem; display: flex; gap: 0.85rem; flex-wrap: wrap; font-weight: 500;">
                   ${m.phone ? `<span>📞 ${m.phone}</span>` : ''}
                   ${m.company ? `<span>🏢 ${m.company}</span>` : ''}
                 </div>
               ` : ''}
 
-              <div style="font-size: 0.82rem; font-weight: 700; color: #1E293B; margin-bottom: 0.25rem;">
+              <div style="font-size: 0.86rem; font-weight: 700; color: #1E293B; margin-bottom: 0.35rem;">
                 Assunto: <span style="font-weight: 600; color: #475569;">${m.subject || 'Contato'}</span>
               </div>
 
-              <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 8px; padding: 0.75rem 0.85rem; font-size: 0.88rem; line-height: 1.55; color: #334155; margin-bottom: 0.75rem; word-break: break-word;">
+              <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 8px; padding: 0.85rem; font-size: 0.9rem; line-height: 1.55; color: #334155; margin-bottom: 0.85rem; word-break: break-word;">
                 ${m.message}
               </div>
 
-              <div style="display: flex; gap: 0.65rem; align-items: center; justify-content: space-between; border-top: 1px solid #F1F5F9; padding-top: 0.75rem;">
-                <div style="display: flex; align-items: center; gap: 0.4rem; flex: 1;">
-                  <span style="font-size: 0.78rem; font-weight: 600; color: #64748B;">Status:</span>
-                  <select class="form-control select-msg-status" data-id="${m.id}" style="padding: 5px 8px; font-size: 0.8rem; font-weight: 700; flex: 1; min-width: 100px; ${m.status === 'unread' ? 'color: #DC2626; background: #FEE2E2;' : m.status === 'replied' ? 'color: #166534; background: #DCFCE7;' : 'color: #475569; background: #F1F5F9;'}">
+              <div style="display: flex; gap: 0.75rem; align-items: center; justify-content: space-between; border-top: 1px solid #F1F5F9; padding-top: 0.85rem; flex-wrap: wrap;">
+                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                  <span style="font-size: 0.82rem; font-weight: 700; color: #475569;">Status:</span>
+                  <select class="select-msg-status status-${m.status || 'unread'}" data-id="${m.id}">
                     <option value="unread" ${m.status === 'unread' ? 'selected' : ''}>Não lida</option>
                     <option value="read" ${m.status === 'read' ? 'selected' : ''}>Lida</option>
                     <option value="replied" ${m.status === 'replied' ? 'selected' : ''}>Respondida</option>
                   </select>
                 </div>
-                <button class="btn-adm btn-adm-danger btn-adm-sm btn-del-msg" data-id="${m.id}" style="padding: 0.45rem 0.75rem;" title="Excluir">
+                <button class="btn-adm btn-adm-danger btn-adm-sm btn-del-msg" data-id="${m.id}" style="padding: 0.45rem 0.85rem;" title="Excluir">
                   🗑️ Excluir
                 </button>
               </div>
