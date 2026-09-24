@@ -76,12 +76,6 @@ export async function renderDiferenciaisPage() {
             <!-- FOTO DO SUPERVISOR COM ADORNOS (ESQUERDA) -->
             <div class="dif-photo-container">
               <div class="dif-photo-backdrop-blue"></div>
-              <div class="dif-blob-tl">
-                <svg width="86" height="86" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="filter: drop-shadow(0 6px 14px rgba(248, 186, 66, 0.38)); display: block;">
-                  <path d="M 32 18 C 50 10, 80 18, 88 42 C 95 62, 85 84, 62 88 C 40 92, 18 82, 14 62 C 10 44, 18 25, 32 18 Z" fill="#F8BA42"/>
-                  <path d="M 20 48 C 14 36, 22 24, 36 22 C 48 20, 46 36, 32 40 C 18 44, 15 60, 26 68 C 36 74, 48 66, 42 52 C 36 40, 24 35, 32 26 C 38 18, 52 22, 54 32 C 56 42, 44 52, 34 52 C 26 52, 24 44, 32 38 C 42 32, 58 40, 68 50" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" opacity="0.95"/>
-                </svg>
-              </div>
               <div class="dif-photo-frame">
                 <img src="${supervisorImg}" alt="Licenças InterFarma" onerror="this.src='/asserts/supervisor-licencas.jpg';">
               </div>
@@ -138,12 +132,6 @@ export async function renderDiferenciaisPage() {
             <!-- FOTO DO ANALISTA NO COMPUTADOR COM ADORNO (DIREITA) -->
             <div class="dif-photo-container">
               <div class="dif-photo-backdrop-blue" style="left: auto; right: -20px; top: -20px;"></div>
-              <div class="dif-blob-tr">
-                <svg width="86" height="86" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="filter: drop-shadow(0 6px 14px rgba(248, 186, 66, 0.38)); display: block;">
-                  <path d="M 32 18 C 50 10, 80 18, 88 42 C 95 62, 85 84, 62 88 C 40 92, 18 82, 14 62 C 10 44, 18 25, 32 18 Z" fill="#F8BA42"/>
-                  <path d="M 20 48 C 14 36, 22 24, 36 22 C 48 20, 46 36, 32 40 C 18 44, 15 60, 26 68 C 36 74, 48 66, 42 52 C 36 40, 24 35, 32 26 C 38 18, 52 22, 54 32 C 56 42, 44 52, 34 52 C 26 52, 24 44, 32 38 C 42 32, 58 40, 68 50" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" opacity="0.95"/>
-                </svg>
-              </div>
               <div class="dif-photo-frame">
                 <img src="${techImg}" alt="Tecnologia InterFarma" onerror="this.src='/asserts/analista-tecnologia.jpg';">
               </div>
