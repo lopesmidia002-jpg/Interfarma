@@ -310,7 +310,7 @@ export function runSeed() {
   ];
 
   const stmtSection = db.prepare(`
-    INSERT OR REPLACE INTO page_sections (
+    INSERT OR IGNORE INTO page_sections (
       page_slug, section_key, title, subtitle, content,
       button_text, button_link, image_url, badge_text, extra_data, sort_order
     ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
@@ -331,7 +331,7 @@ export function runSeed() {
       sec.sort_order
     );
   }
-  console.log('📄 Seções das 8 páginas inseridas/atualizadas com sucesso.');
+  console.log('📄 Seções das 8 páginas verificadas/preservadas com sucesso.');
 
   // 4. Medicamentos Iniciais Padrão
   const medCount = db.prepare('SELECT COUNT(*) as count FROM medicines').get();
